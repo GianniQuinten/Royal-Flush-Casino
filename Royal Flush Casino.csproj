@@ -8,4 +8,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Documentation\Userstory\userstory.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Documentation\Userstory\userstory.txt" />
+  </ItemGroup>
+
 </Project>
