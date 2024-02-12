@@ -8,5 +8,21 @@ namespace Royal_Flush_Casino
 {
 	internal class Player
 	{
+		double  balance;
+
+		public Player(double balance) 
+		{
+			this.balance = balance;
+		}
+
+		public double getBalance()
+		{
+			return balance;
+		}
+
+		public void setBalance(double newBalance)
+		{
+			balance = newBalance;
+		}
 	}
 }

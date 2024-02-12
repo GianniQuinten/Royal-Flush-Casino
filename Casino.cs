@@ -30,5 +30,14 @@ namespace Royal_Flush_Casino
 					break;
 			}
 		}
+
+		public void AtmOptions()
+		{
+			Console.WriteLine("what would you like to do?");
+			Console.WriteLine("1. Deposit money");
+			Console.WriteLine("2. Withdraw money");
+			Console.WriteLine("3. Show account balance");
+			Console.WriteLine("4. Exit");
+		}
 	}
 }
