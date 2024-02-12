@@ -10,7 +10,7 @@
 			Casino royalFlushCasino = new Casino();
 
 			// Call the EnterCasino method
-			royalFlushCasino.EnterCasino();
+			royalFlushCasino.enterCasino();
 		}
 	}
 }

@@ -9,6 +9,7 @@ namespace Royal_Flush_Casino
 	internal class Player
 	{
 		double  balance;
+		double moneyOnHand = 500;
 
 		public Player(double balance) 
 		{
