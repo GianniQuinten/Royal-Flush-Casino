@@ -8,5 +8,6 @@ namespace Royal_Flush_Casino.Algorithm
 {
 	internal class Playerinteraction
 	{
+		// Class for managing player interactions
 	}
 }
