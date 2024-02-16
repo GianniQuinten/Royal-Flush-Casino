@@ -35,32 +35,34 @@ namespace Royal_Flush_Casino
 		{
 
 			Console.WriteLine("What would you like to do?");
+			Console.WriteLine("1. Deposit money");
+			Console.WriteLine("2. Withdraw money.");
+			Console.WriteLine("3. Show account balance");
+			Console.WriteLine("4. Exit");
 			string atmChoice = Console.ReadLine();
 
 			switch (atmChoice)
 			{
 				case "1":
 					Console.WriteLine("1. Deposit money");
-					// Add code to handle going to the cashier
+					// cod that handles deposit
 					break;
 				case "2":
 					Console.WriteLine("2. Withdraw money.");
-					atmOptions();
+					// class that handles withdrawal
 					break;
 				case "3":
 					Console.WriteLine("3. Show account balance");
-					atmOptions();
+					// code that shows balalance
 					break;
 				case "4":
 					Console.WriteLine("4. Exit");
-					atmOptions();
+					//exit 
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter a correct number");
 					break;
 			}
-		}
-
 		}
 
 		void deposit(Player playerBalance)
@@ -91,13 +93,16 @@ namespace Royal_Flush_Casino
 				Console.Write("Your current balance is: " + playerBalance.getBalance());
 			}
 
-		 void CashierOptions()
-		 {
+			void CashierOptions()
+			{
 				Console.WriteLine("Hi there can I help you?");
 				Console.WriteLine("1. Exchange chips for money");
 				Console.WriteLine("2. exhange money for chips");
 				Console.WriteLine("3. Exit");
-		 }
+			}
 		}
 	}
-}
+
+	}
+
+	

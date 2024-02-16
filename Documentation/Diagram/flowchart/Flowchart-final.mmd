@@ -1,0 +1,85 @@
+flowchart TD
+    A[Welcome to royal casino!] -->|player starts with 500 euro| B{What do you want to do?}
+    B -->|I want to deposit money| D[ATM]
+    B -->|I want to withdraw money| D[ATM]
+
+    B -->|I want chips| F[cashier]
+    F -->|How much| G{Let me think}
+    G -->H[50]
+    G -->I[200]
+    G -->J[500]
+    G -->K[ALL]
+    H --> L[money exhanged]
+    I --> L[money exhanged]
+    J --> L[money exhanged]
+    K --> L[money exhanged]
+
+    L --> M[GAME STARTS]
+
+
+    M -->|player enters GAME mode!| BB{What do you want to do?}
+
+
+    BB--> CC[Slot machines]
+    CC--> |what kind of slotgame?| GG{let me think}
+    GG--> |actually nevermind| CC[Slot machines]
+    GG-->  HH[Slot machine 1]
+    GG-->  II[Slot machine 2]
+
+    BB--> DD[Table games]
+    DD--> |what kind of slotgame?| JJ{let me think}
+    JJ--> |actually nevermind| DD[Table games]
+    JJ-->  KK[table game 1]
+    JJ-->  LL[table game 2]
+
+
+
+    BB--> EE[Sport betting]
+    EE--> |what kind of Betting?| MM{let me think}
+    MM--> |actually nevermind| EE{Sport betting}
+    MM-->  NN[Horse betting]
+    MM-->  OO[Chicken betting]
+
+
+    BB--> FF[Bingo]
+    FF--> |what kind of Betting?| PP{Let me think}
+    PP-->|actually nevermind| FF{Bingo}
+    PP--> QQ[Bingo 1]
+    PP --> RR[Bingo 2]
+   
+    HH--> SS{please set set}
+    II--> SS{please set set}
+    KK--> SS{please set set}
+    LL--> SS{please set set}
+    NN--> SS{please set set}
+    OO--> SS{please set set}
+    QQ--> SS{please set set}
+    RR--> SS{please set set}
+
+    SS--> |I want to bet 50 | AAA[50]
+    SS--> |I want to bet 200 | BBB[200]
+    SS--> |I want to bet 500 | CCC[500]
+    SS--> |I want to bet all | DDD[all]
+
+    AAA--> EEE{gambling Phase}
+    BBB--> EEE{gambling Phase}
+    CCC--> EEE{gambling Phase}
+    DDD--> EEE{gambling Phase}
+ 
+    EEE{Gambling Phase} -->|Player decides to play table games| FFF[Deal Cards]
+    EEE -->|Player decides to play slots| GGG[Slot Machines]
+    EEE -->|Player decides to place sports bet| HHH[Sport Betting]
+    EEE -->|Player decides to play bingo| III[Bingo]
+    EEE -->|Player runs out of money| ZZZ[Game Over]
+
+    FFF -->|Player interacts with table game| FFF
+    FFF -->|Player exits table game| EEE
+    GGG -->|Player interacts with slot machine| GGG
+    GGG -->|Player exits slot machines| EEE
+    HHH -->|Player places sports bet| HHH
+    HHH -->|Player exits sport betting| EEE
+    III -->|Player participates in bingo game| III
+    III -->|Player exits bingo| EEE
+
+    ZZZ -->|ATM has money| A
+    ZZZ -->|No money left| GameOver[Game Over]
