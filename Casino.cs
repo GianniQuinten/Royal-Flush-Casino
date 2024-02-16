@@ -6,6 +6,7 @@ namespace Royal_Flush_Casino
 	{
 		public void enterCasino()
 		{
+			// fix by exit that the hello message wont display
 			Console.WriteLine("Hello!");
 			Console.WriteLine("Welcome in Royal Flush Casino!");
 			Console.WriteLine("You walk through the doors and see a Cashier and an ATM.");
@@ -45,19 +46,19 @@ namespace Royal_Flush_Casino
 			{
 				case "1":
 					Console.WriteLine("1. Deposit money");
-					// cod that handles deposit
+					// deposit();
 					break;
 				case "2":
 					Console.WriteLine("2. Withdraw money.");
-					// class that handles withdrawal
+					// withdraw();
 					break;
 				case "3":
 					Console.WriteLine("3. Show account balance");
-					// code that shows balalance
+					// balance();
 					break;
 				case "4":
 					Console.WriteLine("4. Exit");
-					//exit 
+					enterCasino();
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter a correct number");

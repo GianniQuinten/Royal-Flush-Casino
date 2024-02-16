@@ -9,6 +9,9 @@
 			// Create an instance of the Casino class
 			Casino royalFlushCasino = new Casino();
 
+			// create a instance of the player
+			// playerCharacter = new Player(0);
+
 			// Call the EnterCasino method
 			royalFlushCasino.enterCasino();
 		}
