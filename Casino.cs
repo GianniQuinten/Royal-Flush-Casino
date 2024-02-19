@@ -76,40 +76,40 @@ namespace Royal_Flush_Casino
 			}
 		}
 
-		public void balance(Player playerBalance)
+		public void balance(Player player)
 		{
-			Console.WriteLine("Your balance is: " + playerBalance.getBalance());
+			Console.WriteLine("Your balance is: " + player.getBalance());
 			Console.WriteLine("Press any key to go back to the ATM options menu...");
 			Console.ReadKey();
 			Console.Clear();
-			atmOptions(playerBalance);
+			atmOptions(player);
 		}
 
-		public void deposit(Player playerBalance)
+		public void deposit(Player player)
 		{
 			Console.WriteLine("How much money would you like to deposit? ");
 			double deposit = Double.Parse(Console.ReadLine());
-			playerBalance.setBalance(deposit);
-			Console.WriteLine("Thank you for using our service! Your new balance is: " + playerBalance.getBalance());
+			player.setBalance(deposit);
+			Console.WriteLine("Thank you for using our service! Your new balance is: " + player.getBalance());
 		}
 
-		void withdraw(Player playerBalance)
+		void withdraw(Player player)
 		{
 			Console.WriteLine("How much money would you like to withdraw? ");
 			double withdrawal = Double.Parse(Console.ReadLine());
 
 			// check if the user does have the right amount to withdraw
-			if (playerBalance.getBalance() < withdrawal)
+			if (player.getBalance() < withdrawal)
 			{
 				Console.WriteLine("you dont have enough money! try earning more money");
 			}
 			else
 			{
-				playerBalance.setBalance(playerBalance.getBalance() - withdrawal);
-				playerBalance.setMoneyOnHand(playerBalance.getMoneyOnHand() + withdrawal);
+				player.setBalance(player.getBalance() - withdrawal);
+				player.setMoneyOnHand(player.getMoneyOnHand() + withdrawal);
 
-				Console.WriteLine("Thank you for using our service! Your new balance is: " + playerBalance.getBalance());
-				Console.WriteLine("You now have:" + playerBalance.getMoneyOnHand() + "on hand");
+				Console.WriteLine("Thank you for using our service! Your new balance is: " + player.getBalance());
+				Console.WriteLine("You now have: " + player.getMoneyOnHand() + " on hand");
 
 			}
 
