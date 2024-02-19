@@ -78,7 +78,7 @@ namespace Royal_Flush_Casino
 			Console.WriteLine("Thank you and enjoy Royal Flush Casino!");
 			Console.WriteLine("You now have: " + player.getChips() + " chips");
 			Console.WriteLine("You now have: " + player.getMoneyOnHand() + " money on hand");
-			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			Console.WriteLine("Press any key to go back to the Cashier options menu...");
 			Console.ReadKey();
 			Console.Clear();
 			cashierOptions(player);
