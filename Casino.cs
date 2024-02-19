@@ -74,7 +74,10 @@ namespace Royal_Flush_Casino
 		public void balance(Player playerBalance)
 		{
 			Console.WriteLine("Your balance is: " + playerBalance.getBalance());
-			// atmOptions();
+			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			Console.ReadKey();
+			Console.Clear();
+			atmOptions(playerBalance);
 		}
 
 		public void deposit(Player playerBalance)
