@@ -30,7 +30,7 @@ namespace Royal_Flush_Casino
 					break;
 				case "3":
 					Console.WriteLine("You have chosen to go gambling!");
-					atmOptions(player);
+					startGame(player);
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter either 1, 2 or 3.");
@@ -184,11 +184,46 @@ namespace Royal_Flush_Casino
 				Console.Clear();
 
 			}
+		}
 
-			
+		void startGame(Player player)
+		{
+			Console.WriteLine("You wander trough the gamebling halls.");
+			Console.WriteLine("You see tons of gamling tables and machines.");
+			Console.WriteLine("What would you like to do?");
+			Console.WriteLine("1. Walk to the slot machines.");
+			//Console.WriteLine("2. Walk to the tablegames.");
+			//Console.WriteLine("3. walk to the sport betting section.");
+			//Console.WriteLine("4. walk to the bingo section.");
+			Console.WriteLine("5..");
+			// Console.WriteLine("3. Exit");
+			string gameModeSelector = Console.ReadLine();
+
+			switch (gameModeSelector)
+			{
+				// case 2 to 4 if there is time
+				case "1":
+					Console.WriteLine("2. lot machines.");
+					break;
+				/*case "2":
+					Console.WriteLine("2. Table games.");
+					break;
+				case "3":
+					Console.WriteLine("3. Sport betting ");
+					break;
+				case "4":
+					Console.WriteLine("4. Bingo! ");
+					break;*/
+				default:
+					Console.WriteLine("Invalid choice. Please enter a correct number");
+					break;
+			}
+
+
+
 		}
 	}
 
 	}
 
-	
+
