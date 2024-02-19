@@ -10,11 +10,13 @@ namespace Royal_Flush_Casino
 	{
 		double  balance;
 		double moneyOnHand;
+		double chips;
 
-		public Player(double balance, double moneyOnHand)
+		public Player(double balance, double moneyOnHand, double chips)
 		{
 			this.balance = balance;
 			this.moneyOnHand = moneyOnHand;
+			this.chips = chips;
 		}
 
 		public double getBalance()
@@ -35,6 +37,16 @@ namespace Royal_Flush_Casino
 		public void setMoneyOnHand(double newMoneyOnHand)
 		{
 			moneyOnHand = newMoneyOnHand;
+		}
+
+		public double getChips()
+		{
+			return chips;
+		}
+
+		public void setChips(double newChips)
+		{
+			chips = newChips;
 		}
 	}
 }
