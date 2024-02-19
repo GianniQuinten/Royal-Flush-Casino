@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Royal_Flush_Casino
 {
 	internal class Casino
 	{
-		public void enterCasino()
+		public void enterCasino(Player player)
 		{
 			// fix by exit that the hello message wont display
 			Console.WriteLine("Hello!");
@@ -24,7 +25,7 @@ namespace Royal_Flush_Casino
 					break;
 				case "2":
 					Console.WriteLine("You have chosen to go to the ATM.");
-					atmOptions();
+					atmOptions(player);
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter either 1 or 2.");
@@ -32,33 +33,37 @@ namespace Royal_Flush_Casino
 			}
 		}
 
-		public void atmOptions()
+		
+		//atmOptions(player);
+
+
+		public void atmOptions(Player player)
 		{
 
 			Console.WriteLine("What would you like to do?");
-			Console.WriteLine("1. Deposit money");
-			Console.WriteLine("2. Withdraw money.");
-			Console.WriteLine("3. Show account balance");
+			Console.WriteLine("1. Show account balance");
+			Console.WriteLine("2. Deposit money");
+			Console.WriteLine("3. Withdraw money.");
 			Console.WriteLine("4. Exit");
 			string atmChoice = Console.ReadLine();
 
 			switch (atmChoice)
 			{
 				case "1":
-					Console.WriteLine("1. Deposit money");
-					// deposit();
+					Console.WriteLine("1. Show account balance");
+					balance(player);
 					break;
 				case "2":
-					Console.WriteLine("2. Withdraw money.");
-					// withdraw();
+					Console.WriteLine("2. Deposit money");
+					deposit(player);
 					break;
 				case "3":
-					Console.WriteLine("3. Show account balance");
-					// balance();
+					Console.WriteLine("3. Withdraw money.");
+					withdraw(player);
 					break;
 				case "4":
 					Console.WriteLine("4. Exit");
-					enterCasino();
+					enterCasino(player);
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter a correct number");
@@ -66,7 +71,13 @@ namespace Royal_Flush_Casino
 			}
 		}
 
-		void deposit(Player playerBalance)
+		public void balance(Player playerBalance)
+		{
+			Console.WriteLine("Your balance is: " + playerBalance.getBalance());
+			// atmOptions();
+		}
+
+		public void deposit(Player playerBalance)
 		{
 			Console.WriteLine("How much money would you like to deposit? ");
 			double deposit = Double.Parse(Console.ReadLine());

@@ -10,10 +10,11 @@
 			Casino royalFlushCasino = new Casino();
 
 			// create a instance of the player
-			// playerCharacter = new Player(0);
+			Player player = new Player(0); // Assuming initial balance is 0
+
 
 			// Call the EnterCasino method
-			royalFlushCasino.enterCasino();
+			royalFlushCasino.enterCasino(player);
 		}
 	}
 }
