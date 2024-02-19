@@ -89,8 +89,15 @@ namespace Royal_Flush_Casino
 		{
 			Console.WriteLine("How much money would you like to deposit? ");
 			double deposit = Double.Parse(Console.ReadLine());
-			player.setBalance(deposit);
+
+			player.setBalance(player.getBalance() + deposit);
+			player.setMoneyOnHand(player.getMoneyOnHand() - deposit);
 			Console.WriteLine("Thank you for using our service! Your new balance is: " + player.getBalance());
+			Console.WriteLine("You now have: " + player.getMoneyOnHand() + " on hand");
+			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			Console.ReadKey();
+			Console.Clear();
+			atmOptions(player);
 		}
 
 		void withdraw(Player player)
@@ -102,6 +109,9 @@ namespace Royal_Flush_Casino
 			if (player.getBalance() < withdrawal)
 			{
 				Console.WriteLine("you dont have enough money! try earning more money");
+				Console.WriteLine("Press any key to go back to the ATM options menu...");
+				Console.ReadKey();
+				Console.Clear();
 			}
 			else
 			{
@@ -110,14 +120,13 @@ namespace Royal_Flush_Casino
 
 				Console.WriteLine("Thank you for using our service! Your new balance is: " + player.getBalance());
 				Console.WriteLine("You now have: " + player.getMoneyOnHand() + " on hand");
+				Console.WriteLine("Press any key to go back to the ATM options menu...");
+				Console.ReadKey();
+				Console.Clear();
 
 			}
 
-			void balance(Player playerBalance)
-			{
-				Console.Write("Your current balance is: " + playerBalance.getBalance());
-				balance(playerBalance);
-			}
+			
 		}
 	}
 
