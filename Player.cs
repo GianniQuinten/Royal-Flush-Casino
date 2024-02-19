@@ -9,11 +9,12 @@ namespace Royal_Flush_Casino
 	internal class Player
 	{
 		double  balance;
-		double moneyOnHand = 500;
+		double moneyOnHand;
 
-		public Player(double balance) 
+		public Player(double balance, double moneyOnHand)
 		{
 			this.balance = balance;
+			this.moneyOnHand = moneyOnHand;
 		}
 
 		public double getBalance()
@@ -24,6 +25,16 @@ namespace Royal_Flush_Casino
 		public void setBalance(double newBalance)
 		{
 			balance = newBalance;
+		}
+
+		public double getMoneyOnHand()
+		{
+			return moneyOnHand;
+		}
+
+		public void setMoneyOnHand(double newMoneyOnHand)
+		{
+			moneyOnHand = newMoneyOnHand;
 		}
 	}
 }

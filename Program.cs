@@ -9,8 +9,8 @@
 			// Create an instance of the Casino class
 			Casino royalFlushCasino = new Casino();
 
-			// create a instance of the player
-			Player player = new Player(0); // Assuming initial balance is 0
+			// create a instance of the player with a balance of a 0 euro and 500 euro on hand
+			Player player = new Player(0, 500);
 
 
 			// Call the EnterCasino method

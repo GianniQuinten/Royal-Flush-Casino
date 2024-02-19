@@ -21,7 +21,7 @@ namespace Royal_Flush_Casino
 			{
 				case "1":
 					Console.WriteLine("You have chosen to go to the Cashier.");
-					// Add code to handle going to the cashier
+					CashierOptions();
 					break;
 				case "2":
 					Console.WriteLine("You have chosen to go to the ATM.");
@@ -33,8 +33,13 @@ namespace Royal_Flush_Casino
 			}
 		}
 
-		
-		//atmOptions(player);
+		void CashierOptions()
+		{
+			Console.WriteLine("Hi there can I help you?");
+			Console.WriteLine("1. Exchange chips for money");
+			Console.WriteLine("2. exhange money for chips");
+			Console.WriteLine("3. Exit");
+		}
 
 
 		public void atmOptions(Player player)
@@ -94,26 +99,24 @@ namespace Royal_Flush_Casino
 			double withdrawal = Double.Parse(Console.ReadLine());
 
 			// check if the user does have the right amount to withdraw
-			if (playerBalance.getBalance() > withdrawal)
+			if (playerBalance.getBalance() < withdrawal)
 			{
 				Console.WriteLine("you dont have enough money! try earning more money");
 			}
 			else
 			{
 				playerBalance.setBalance(playerBalance.getBalance() - withdrawal);
+				playerBalance.setMoneyOnHand(playerBalance.getMoneyOnHand() + withdrawal);
+
+				Console.WriteLine("Thank you for using our service! Your new balance is: " + playerBalance.getBalance());
+				Console.WriteLine("You now have:" + playerBalance.getMoneyOnHand() + "on hand");
+
 			}
 
 			void balance(Player playerBalance)
 			{
 				Console.Write("Your current balance is: " + playerBalance.getBalance());
-			}
-
-			void CashierOptions()
-			{
-				Console.WriteLine("Hi there can I help you?");
-				Console.WriteLine("1. Exchange chips for money");
-				Console.WriteLine("2. exhange money for chips");
-				Console.WriteLine("3. Exit");
+				balance(playerBalance);
 			}
 		}
 	}
