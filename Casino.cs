@@ -8,8 +8,6 @@ namespace Royal_Flush_Casino
 		public void enterCasino(Player player)
 		{
 			// fix by exit that the hello message wont display
-			Console.WriteLine("Hello!");
-			Console.WriteLine("Welcome in Royal Flush Casino!");
 			Console.WriteLine("You walk through the doors and see a Cashier and an ATM.");
 			Console.WriteLine("What do you want to do?");
 			Console.WriteLine("1. Go to the Cashier");
