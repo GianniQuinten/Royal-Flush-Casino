@@ -1,4 +1,5 @@
-﻿using Royal_Flush_Casino.Utility;
+﻿using Royal_Flush_Casino.Game;
+using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino
 {
@@ -17,7 +18,14 @@ namespace Royal_Flush_Casino
 			Welcometitle.displayTitle();
 			Welcometitle.displayWelcome();
 			// Call the EnterCasino method
-			royalFlushCasino.enterCasino(player);
+			/*royalFlushCasino.enterCasino(player);*/
+
+
+			// Create an instance of SportBetting
+			SportBetting sportBetting = new SportBetting();
+
+			// Call the PrintMessage method
+			sportBetting.PrintMessage();
 		}
 	}
 }
