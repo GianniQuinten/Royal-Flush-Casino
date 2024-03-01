@@ -3,7 +3,7 @@ using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino
 {
-	internal class Program
+    internal class Program
 	{
 		static void Main(string[] args)
 		{
@@ -20,7 +20,7 @@ namespace Royal_Flush_Casino
 			// Call the EnterCasino method
 			/*royalFlushCasino.enterCasino(player);*/
 
-            SportBetting.PrintMessage();
+            SportBetting.SportBettingMain();
         }
     }
 }

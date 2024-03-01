@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Numerics;
 using System.Diagnostics;
+using Royal_Flush_Casino.Game;
 
 namespace Royal_Flush_Casino
 {
-	internal class Casino
+    internal class Casino
 	{
 		public void enterCasino(Player player)
 		{
@@ -211,8 +212,8 @@ namespace Royal_Flush_Casino
 
         void NavigateToSportBetting()
         {
-            Game.SportBetting sportBetting = new Game.SportBetting();
-            sportBetting.PrintMessage();
+            SportBetting sportBetting = new SportBetting();
+            SportBetting.SportBettingMain();
         }
     }
 }
