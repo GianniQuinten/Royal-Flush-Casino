@@ -1,8 +1,9 @@
-﻿using Royal_Flush_Casino.Utility;
+﻿using Royal_Flush_Casino.Game;
+using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino
 {
-	internal class Program
+    internal class Program
 	{
 		static void Main(string[] args)
 		{
@@ -17,7 +18,9 @@ namespace Royal_Flush_Casino
 			Welcometitle.displayTitle();
 			Welcometitle.displayWelcome();
 			// Call the EnterCasino method
-			royalFlushCasino.enterCasino(player);
-		}
-	}
+			/*royalFlushCasino.enterCasino(player);*/
+
+            SportBetting.SportBettingMain();
+        }
+    }
 }
