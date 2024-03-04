@@ -20,7 +20,9 @@ namespace Royal_Flush_Casino
 			// Call the EnterCasino method
 			/*royalFlushCasino.enterCasino(player);*/
 
-            SportBetting.SportBettingMain();
-        }
-    }
+			SlotMachine.ChooseSlotMachine(player);
+
+
+		}
+	}
 }
