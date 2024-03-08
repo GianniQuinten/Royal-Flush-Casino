@@ -22,8 +22,8 @@ namespace Royal_Flush_Casino.Game
             // Simulate the race
             Random random = new Random();
             int[] horsePositions = new int[4]; // Array to store the positions of each horse
-            int raceDistance = 26; // Total distance of the race
-            int finishLine = 25; // Position of the finish line
+            int raceDistance = 41; // Total distance of the race
+            int finishLine = 40; // Position of the finish line
             int winningHorse = -1; // Initialize winning horse
             while (true)
             {
