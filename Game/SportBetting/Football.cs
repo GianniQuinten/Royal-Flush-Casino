@@ -15,18 +15,15 @@ namespace Royal_Flush_Casino.Game
                 "Manchester City", "Liverpool", "Arsenal", "Manchester United", "Chelsea"
             };
 
-            // Select teams
-            Console.WriteLine("Select two teams to play:");
+            // Select teams randomly
+            Random random = new Random();
+            int teamIndex1 = random.Next(teams.Count);
+            int teamIndex2 = random.Next(teams.Count);
 
-            for (int i = 0; i < teams.Count; i++)
+            while (teamIndex1 == teamIndex2) // Ensure both teams are different
             {
-                Console.WriteLine($"{i + 1}. {teams[i]}");
+                teamIndex2 = random.Next(teams.Count);
             }
-
-            Console.Write("Enter the number of the first team: ");
-            int teamIndex1 = int.Parse(Console.ReadLine()) - 1;
-            Console.Write("Enter the number of the second team: ");
-            int teamIndex2 = int.Parse(Console.ReadLine()) - 1;
 
             string teamA = teams[teamIndex1];
             string teamB = teams[teamIndex2];
@@ -34,19 +31,43 @@ namespace Royal_Flush_Casino.Game
             // Clear console
             Console.Clear();
 
-            // Simulate match
-            Random random = new Random();
+            // Display match information
+            Console.WriteLine($"Match: {teamA} vs {teamB}\n");
 
+            // Betting
+            Console.WriteLine("Place your bet:");
+            Console.WriteLine($"1. {teamA} wins");
+            Console.WriteLine("2. Draw");
+            Console.WriteLine($"3. {teamB} wins");
+            Console.Write("Enter your choice: ");
+            string choiceText = Console.ReadLine();
+            string chosenBet;
+            switch (choiceText)
+            {
+                case "1":
+                    chosenBet = teamA + " wins";
+                    break;
+                case "2":
+                    chosenBet = "Draw";
+                    break;
+                case "3":
+                    chosenBet = teamB + " wins";
+                    break;
+                default:
+                    chosenBet = "Invalid choice";
+                    break;
+            }
+
+            // Clear console
+            Console.Clear();
+
+            // Simulate match
             int minutes = 0;
             int goalsA = 0;
             int goalsB = 0;
 
-            int goalLine = 3; // Starting line for goal messages
+            int lineHeight = 4; // Starting line for goal messages
 
-            // Kick Off!
-            Console.SetCursorPosition(0, goalLine);
-            Console.WriteLine("Kick Off!");
-            goalLine++;
 
             while (minutes <= 90)
             {
@@ -63,6 +84,10 @@ namespace Royal_Flush_Casino.Game
                 Console.SetCursorPosition(0, 1);
                 Console.Write($"Minute: {minutes}'");
 
+                // Your bet
+                Console.SetCursorPosition(0, 2);
+                Console.Write($"You bet on: {chosenBet}");
+
                 // Simulate events like goals
                 if (random.Next(100) < 3) // 3% chance of a goal in any minute
                 {
@@ -76,37 +101,67 @@ namespace Royal_Flush_Casino.Game
                         goalsB++;
                     }
 
-                    Console.SetCursorPosition(0, goalLine);
+                    Console.SetCursorPosition(0, lineHeight);
                     Console.WriteLine($"GOAL! {scoringTeam} scored in the {minutes}th minute!");
-                    goalLine++; // Move to the next line for the next goal message
+                    lineHeight++; // Move to the next line for the next goal message
+                }
+
+                if (minutes == 0)
+                {
+                    // Kick Off!
+                    Console.SetCursorPosition(0, lineHeight);
+                    Console.WriteLine("Kick Off!\n");
+                    lineHeight++;
                 }
 
                 // Half Time
                 if (minutes == 45)
                 {
-                    goalLine = goalLine + 1;
-                    Console.SetCursorPosition(0, goalLine);
+                    lineHeight++;
+                    Console.SetCursorPosition(0, lineHeight);
                     Console.WriteLine($"Half Time! {teamA} {goalsA} - {goalsB} {teamB}");
-                    goalLine++;
+                    Thread.Sleep(2000); // Pause for 2 seconds
+                    lineHeight++;
                 }
 
                 // Kick Off! Second Half begins!
                 if (minutes == 46)
                 {
-                    goalLine = goalLine + 1;
-                    Console.SetCursorPosition(0, goalLine);
+                    lineHeight++;
+                    Console.SetCursorPosition(0, lineHeight);
                     Console.WriteLine("Kick Off! Second Half begins!");
-                    goalLine++;
+                    lineHeight++;
                 }
 
-                Thread.Sleep(300);
+                Thread.Sleep(250);
                 minutes++;
             }
 
             // Display match result
-            Console.SetCursorPosition(0, goalLine);
+            Console.SetCursorPosition(0, lineHeight);
             Console.WriteLine("\nFull Time!");
             Console.WriteLine($"Match: {teamA} {goalsA} - {goalsB} {teamB}");
+
+            // Determine outcome based on user's choice
+            string betOutcome;
+            if (choiceText == "1")
+            {
+                betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
+            }
+            else if (choiceText == "2")
+            {
+                betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
+            }
+            else if (choiceText == "3")
+            {
+                betOutcome = goalsA < goalsB ? "You win!" : "You lose!";
+            }
+            else
+            {
+                betOutcome = "Invalid choice";
+            }
+
+            Console.WriteLine($"Your bet outcome: {betOutcome}");
         }
     }
 }
