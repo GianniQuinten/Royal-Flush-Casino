@@ -64,6 +64,21 @@ namespace Royal_Flush_Casino.Game
             };
         }
 
+		double winMultiplier = 0;
+		double baseMultiplier = 20;
+
+		double CalculatePayout(string symbol)
+		{
+			switch (symbol)
+			{
+				case "🍒": return 5.0 * baseMultiplier;
+				case "🍇": return 5.0 * baseMultiplier;
+				case "🍓": return 5.0 * baseMultiplier;
+				case "🍉": return 5.0 * baseMultiplier;
+				default: return 0; // No win
+			}
+		}
+
 		// this is the  Play method logic that can be used by other slotmachines
 		public virtual void Play(Player player)
 		{
@@ -115,44 +130,35 @@ namespace Royal_Flush_Casino.Game
 			}
 
 			// Display final grid
+			// Display final grid
 			DisplaySlotGrid(grid);
 
-			// Check for winning condition (middle row alignment)
+			// Win checks (rows and diagonals)
+			bool isUpperRowWin = grid[0, 0] == grid[1, 0] && grid[1, 0] == grid[2, 0];
 			bool isMiddleRowWin = grid[0, 1] == grid[1, 1] && grid[1, 1] == grid[2, 1];
+			bool isLowerRowWin = grid[0, 2] == grid[1, 2] && grid[1, 2] == grid[2, 2];
+			bool isDiagonalWinLTR = grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2];
+			bool isDiagonalWinRTL = grid[2, 0] == grid[1, 1] && grid[1, 1] == grid[0, 2];
+			bool isAnyWin = isUpperRowWin || isMiddleRowWin || isLowerRowWin || isDiagonalWinLTR || isDiagonalWinRTL;
 
-			// Initialize a variable to hold the win multiplier
-			double winMultiplier = 0;
+			
 
-			// Define a method to calculate the payout based on the symbol
-			double CalculatePayout(string symbol)
-			{
-				switch (symbol)
-				{
-					case "🍒": return 5.0 * 20; // Example: cherry has a base price of 5 chips, and the win multiplier is 20.
-												// Add more cases for different symbols as needed
-					default: return 0; // No win
-				}
-			}
-
-			if (isMiddleRowWin)
+			// Modify this part to account for all win conditions
+			if (isAnyWin)
 			{
 				Console.WriteLine("Congratulations! You won!");
-				winMultiplier = CalculatePayout(grid[1, 1]); // Calculate the payout based on the winning symbol in the middle row
+				// Assuming we prioritize diagonal wins or any win, pick a representative symbol for the win type
+				string winningSymbol = isMiddleRowWin ? grid[1, 1] : grid[0, 0]; // Simplified example
+				winMultiplier = CalculatePayout(winningSymbol);
+				player.chips += winMultiplier; // Update the player's chip count
+				Console.WriteLine($"You won {winMultiplier} chips!");
 			}
-			// Optionally, add logic for diagonal win checks and adjust winMultiplier accordingly
-
 			else
 			{
 				Console.WriteLine("Better luck next time!");
 			}
 
-			// Example: Update player's chips based on winMultiplier
-			if (winMultiplier > 0)
-			{
-				player.chips += winMultiplier; // Assuming Player class has a chips property to track player's balance
-				Console.WriteLine($"You won {winMultiplier} chips!");
-			}
-
+			// Ending prompts...
 			Console.ReadKey();
 		}
 
