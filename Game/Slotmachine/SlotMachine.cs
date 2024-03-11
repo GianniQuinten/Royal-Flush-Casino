@@ -12,7 +12,7 @@ namespace Royal_Flush_Casino.Game
 
         public static void ChooseSlotMachine(Player Player) 
         {
-			Console.WriteLine("Welcome to Sports Betting!");
+			Console.WriteLine("Welcome to slotmachine!");
 
 			// Display sports options
 			Console.WriteLine("Choose the slotmachine you want to use:");
