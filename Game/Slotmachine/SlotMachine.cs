@@ -31,7 +31,8 @@ namespace Royal_Flush_Casino.Game
 					break;
 				case "2":
 					Console.WriteLine("Trigger Space");
-					 // Ensure this method is called correctly
+					SpaceSlotMachine spaceSlotMachine = new SpaceSlotMachine();
+					spaceSlotMachine.Play(Player);
 					break;
 				case "3":
 					Console.WriteLine("Exit");
@@ -54,24 +55,77 @@ namespace Royal_Flush_Casino.Game
             };
         }
 
-        // This is virtual because otherwise it cant be overriden
-        public virtual void Play(Player player)
-        {
-            Console.WriteLine("Spinning the reels...");
+		// This is virtual because otherwise it cant be overriden
+		public virtual void Play(Player player)
+		{
+			Random random = new Random();
+			int numberOfReels = 3;
+			int numberOfSymbols = 3; // Assuming a 3x3 grid
+			string[,] grid = new string[numberOfReels, numberOfSymbols];
 
-            // spins the solts 
-            string[] result = SpinSlots();
+			// Initialize grid with starting symbols
+			for (int reel = 0; reel < numberOfReels; reel++)
+			{
+				for (int symbol = 0; symbol < numberOfSymbols; symbol++)
+				{
+					grid[reel, symbol] = "🍒"; // Starting with cherries, for example
+				}
+			}
 
-            // Display the result
-            Console.WriteLine("Result:");
+			// Display initial grid
+			DisplaySlotGrid(grid);
 
-            foreach (string symbol in result)
-            {
-                Console.WriteLine(symbol);
-            }
-        }
+			// Animate each reel
+			for (int reel = 0; reel < numberOfReels; reel++)
+			{
+				DateTime endTime = DateTime.Now.AddSeconds(3);
+				while (DateTime.Now < endTime)
+				{
+					// Update each symbol in the current reel
+					for (int symbol = 0; symbol < numberOfSymbols; symbol++)
+					{
+						grid[reel, symbol] = slots[reel][random.Next(slots[reel].Length)];
+					}
 
-        private string[] SpinSlots()
+					// Display updated reel
+					DisplaySlotGrid(grid);
+					System.Threading.Thread.Sleep(100); // Delay for animation
+				}
+			}
+
+			// Set final symbols
+			for (int reel = 0; reel < numberOfReels; reel++)
+			{
+				for (int symbol = 0; symbol < numberOfSymbols; symbol++)
+				{
+					grid[reel, symbol] = slots[reel][random.Next(slots[reel].Length)];
+				}
+			}
+
+			// Display final grid
+			DisplaySlotGrid(grid);
+			Console.WriteLine("\nPress any key to continue...");
+			Console.ReadKey();
+		}
+
+		private void DisplaySlotGrid(string[,] grid)
+		{
+			Console.Clear(); // Clears the console once to draw the grid layout
+			Console.WriteLine("Spinning the reels...\n");
+			for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+			{
+				for (int reel = 0; reel < grid.GetLength(0); reel++)
+				{
+					Console.Write(grid[reel, symbol] + "   "); // Adjust spacing as needed
+				}
+				Console.WriteLine("\n");
+			}
+		}
+
+
+
+
+		private string[] SpinSlots()
         {
             Random random = new Random();
             string[] result = new string[slots.Length];
