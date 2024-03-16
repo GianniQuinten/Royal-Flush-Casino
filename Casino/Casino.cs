@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Diagnostics;
 using Royal_Flush_Casino.Game;
+using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino
 {
@@ -199,7 +200,8 @@ namespace Royal_Flush_Casino
             {
                 case "1":
                     Console.WriteLine("You walk to the slot machines.");
-                    break;
+					NavigateToSlotmachines(player); // Ensure this method is called correctly
+					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
                     NavigateToSportBetting(); // Ensure this method is called correctly
@@ -215,6 +217,11 @@ namespace Royal_Flush_Casino
             SportBetting sportBetting = new SportBetting();
             SportBetting.SportBettingMain();
         }
-    }
+
+		void NavigateToSlotmachines(Player player)
+		{
+			GameSelector.ChooseSlotMachine(player);
+		}
+	}
 }
 

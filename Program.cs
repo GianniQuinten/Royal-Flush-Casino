@@ -7,7 +7,8 @@ namespace Royal_Flush_Casino
 	{
 		static void Main(string[] args)
 		{
-			
+			//this line will make sure that the slotwheel icons are displayed
+			Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 			// CHECK if the microsoft coding conventions match
 
@@ -19,9 +20,9 @@ namespace Royal_Flush_Casino
 
 			Welcometitle.DisplayTitle();
 			Welcometitle.DisplayWelcome();
+
 			// Call the EnterCasino method
 			royalFlushCasino.enterCasino(player);
-
 			/*SlotMachine.ChooseSlotMachine(player);*/
 
 
