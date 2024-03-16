@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Royal_Flush_Casino.Game
+namespace Royal_Flush_Casino.Utility
 {
-	internal class Roulette
+	internal class ChipsBetter
 	{
 	}
 }
