@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Royal_Flush_Casino.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,19 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 			// Define symbols for each reel for the berry-themed slot machine
 			slots = new string[][]
 			{
-				new string[] { "🍓", "🍉", "🍒", "🍓" },
-				new string[] { "🍒", "🍓", "🍉", "🍒" },
-				new string[] { "🍉", "🍒", "🍓", "🍉" }
+				new string[] { "🍎", "🍌", "🍍", "🍇" },
+				new string[] { "🍎", "🍌", "🍍", "🍇" },
+				new string[] { "🍎", "🍌", "🍍", "🍇" }
+			};
+
+
+			// Define specific multipliers for this slot machine
+			symbolPayouts = new Dictionary<string, double>
+			{
+				{ "🍎", 10.0 },
+				{ "🍌", 8.0 },
+				{ "🍍", 12.0 },
+				{ "🍇", 6.0 }
 			};
 		}
 
@@ -52,8 +63,8 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				}
 				else if (response == "no")
 				{
-					Console.WriteLine("Maybe next time.");
-					keepPlaying = false; // Player chose not to play
+					Console.Clear();
+					GameSelector.ChooseSlotMachine(player);
 				}
 				else
 				{

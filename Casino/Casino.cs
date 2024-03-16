@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Diagnostics;
 using Royal_Flush_Casino.Game;
+using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino
 {
@@ -219,7 +220,7 @@ namespace Royal_Flush_Casino
 
 		void NavigateToSlotmachines(Player player)
 		{
-			SlotMachine.ChooseSlotMachine(player);
+			GameSelector.ChooseSlotMachine(player);
 		}
 	}
 }

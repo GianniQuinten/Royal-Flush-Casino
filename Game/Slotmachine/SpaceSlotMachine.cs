@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Royal_Flush_Casino.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,25 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 	{
 		public SpaceSlotMachine() : base()
 		{
-			// Define symbols for each reel for the diamond-themed slot machine
+			// Set a specific cost for spinning this fruit slot machine.
+			this.spinCost = 4.0; // Directly assign the value to the protected field/property
+
+								 // Define symbols for each reel for the diamond-themed slot machine
 			slots = new string[][]
 			{
 				new string[] { "🌍", "⭐", "👽", "🚀" },
 				new string[] { "🚀", "🌍", "⭐", "👽" },
 				new string[] { "👽", "🚀", "🌍", "⭐" }
+			};
+
+
+			// Define specific multipliers for this slot machine
+			symbolPayouts = new Dictionary<string, double>
+			{
+				{ "🌍", 15.0 },
+				{ "⭐", 4.0 },
+				{ "👽", 2.0 },
+				{ "🚀", 9.0 }
 			};
 		}
 
@@ -50,8 +64,8 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				}
 				else if (response == "no")
 				{
-					Console.WriteLine("Maybe next time.");
-					keepPlaying = false; // Player chose not to play
+					Console.Clear();
+					GameSelector.ChooseSlotMachine(player);
 				}
 				else
 				{

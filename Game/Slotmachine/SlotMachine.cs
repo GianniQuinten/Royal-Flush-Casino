@@ -1,5 +1,6 @@
 ﻿using Royal_Flush_Casino.Game.Slotmachine;
 using System;
+using Royal_Flush_Casino.Utility;
 
 
 namespace Royal_Flush_Casino.Game
@@ -13,41 +14,15 @@ namespace Royal_Flush_Casino.Game
 		// The cost to play a single spin on this slot machine. This can be overridden by other slotmachine classes.
 		protected double spinCost;
 
+		// dictionary for the icons to assign a multiplier
+		protected Dictionary<string, double> symbolPayouts = new Dictionary<string, double>();
+
 		// selector to choose slotmachine
-		public static void ChooseSlotMachine(Player Player) 
-        {
-			Console.WriteLine("Welcome to slotmachine!");
-
-			// displays options
-			Console.WriteLine("Choose the slotmachine you want to use:");
-			Console.WriteLine("1. FruitSlotMachine");
-			Console.WriteLine("2. SpaceSlotMachine");
-			Console.WriteLine("3. Exit");
-
-			// reads the player's choice/input
-			string slotMachineSelector = Console.ReadLine();
-
-			// a switchcase to handle the player's selection
-			switch (slotMachineSelector)
-			{
-				case "1":
-					Console.WriteLine("Trigger Fruit.");
-					FruitSlotMachine fruitSlotMachine = new FruitSlotMachine();
-					fruitSlotMachine.Play(Player);
-					break;
-				case "2":
-					Console.WriteLine("Trigger Space");
-					SpaceSlotMachine spaceSlotMachine = new SpaceSlotMachine();
-					spaceSlotMachine.Play(Player);
-					break;
-				case "3":
-					Console.WriteLine("Exit");
-					// Ensure this method is called correctly
-					break;
-				default:
-					Console.WriteLine("Invalid choice. Please enter a correct number");
-					break;
-			}
+		private void ChooseSlotMachine(Player player)
+		{
+			// Directly invoke the GameSelector's method to choose the slot machine
+			// Make sure GameSelector is accessible from this context
+			GameSelector.ChooseSlotMachine(player);
 		}
 
 		// Constructor that initializes/makes a setup of the base slot symbols
@@ -60,21 +35,26 @@ namespace Royal_Flush_Casino.Game
                 new string[] { "🍒", "🍇", "🍓", "🍉" },
                 new string[] { "🍒", "🍇", "🍓", "🍉" }
             };
-        }
+
+			// Base multipliers - can be overridden in derived classes
+			symbolPayouts.Add("🍒", 5.0);
+			symbolPayouts.Add("🍇", 5.0);
+			symbolPayouts.Add("🍓", 5.0);
+			symbolPayouts.Add("🍉", 5.0);
+		}
+
+			
 
 		double winMultiplier = 0;
 		double baseMultiplier = 20;
 
-		double CalculatePayout(string symbol)
+		protected double CalculatePayout(string symbol)
 		{
-			switch (symbol)
+			if (symbolPayouts.TryGetValue(symbol, out double multiplier))
 			{
-				case "🍒": return 5.0 * baseMultiplier;
-				case "🍇": return 5.0 * baseMultiplier;
-				case "🍓": return 5.0 * baseMultiplier;
-				case "🍉": return 5.0 * baseMultiplier;
-				default: return 0; // No win
+				return multiplier * baseMultiplier; // Assuming baseMultiplier is defined elsewhere
 			}
+			return 0; // No win
 		}
 
 		// this is the  Play method logic that can be used by other slotmachines
@@ -154,6 +134,7 @@ namespace Royal_Flush_Casino.Game
 			else
 			{
 				Console.WriteLine("Better luck next time!");
+				Console.WriteLine("press any key to continue");
 			}
 
 			// Ending prompts...
