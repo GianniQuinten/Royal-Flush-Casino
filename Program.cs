@@ -21,8 +21,8 @@ namespace Royal_Flush_Casino
 			Welcometitle.DisplayTitle();
 			Welcometitle.DisplayWelcome();
 			// Call the EnterCasino method
-			/*royalFlushCasino.enterCasino(player);*/
-			SlotMachine.ChooseSlotMachine(player);
+			royalFlushCasino.enterCasino(player);
+			/*SlotMachine.ChooseSlotMachine(player);*/
 
 
 		}

@@ -199,7 +199,8 @@ namespace Royal_Flush_Casino
             {
                 case "1":
                     Console.WriteLine("You walk to the slot machines.");
-                    break;
+					NavigateToSlotmachines(player); // Ensure this method is called correctly
+					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
                     NavigateToSportBetting(); // Ensure this method is called correctly
@@ -215,6 +216,11 @@ namespace Royal_Flush_Casino
             SportBetting sportBetting = new SportBetting();
             SportBetting.SportBettingMain();
         }
-    }
+
+		void NavigateToSlotmachines(Player player)
+		{
+			SlotMachine.ChooseSlotMachine(player);
+		}
+	}
 }
 
