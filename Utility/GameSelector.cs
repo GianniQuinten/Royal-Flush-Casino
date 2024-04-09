@@ -73,16 +73,15 @@ namespace Royal_Flush_Casino.Utility
 			// Display sports options
 			Console.WriteLine("Choose the sport you want to bet on:");
 			Console.WriteLine("1. Football");
-			Console.WriteLine("2. Basketball");
-			Console.WriteLine("3. Horse Racing");
+			Console.WriteLine("2. Horse Racing");
 
 			// Get user's choice of sport
-			Console.Write("Enter your choice (1/2/3): ");
+			Console.Write("Enter your choice (1/2): ");
 			int sportChoice;
-			while (!int.TryParse(Console.ReadLine(), out sportChoice) || sportChoice < 1 || sportChoice > 3)
+			while (!int.TryParse(Console.ReadLine(), out sportChoice) || sportChoice < 1 || sportChoice > 2)
 			{
-				Console.WriteLine("Invalid choice. Please enter 1, 2, or 3.");
-				Console.Write("Enter your choice (1/2/3): ");
+				Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+				Console.Write("Enter your choice (1/2): ");
 			}
 
 			// Call method based on user's choice of sport
@@ -92,9 +91,6 @@ namespace Royal_Flush_Casino.Utility
 					Football.BetOnFootball();
 					break;
 				case 2:
-					Basketball.BetOnBasketball();
-					break;
-				case 3:
 					HorseRacing.BetOnHorseRacing();
 					break;
 			}

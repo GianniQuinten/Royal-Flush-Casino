@@ -47,32 +47,38 @@ namespace Royal_Flush_Casino.Game
                 string teamA = Teams[teamIndex1];
                 string teamB = Teams[teamIndex2];
 
-                // Display match information
-                Console.WriteLine($"Match: {teamA} vs {teamB}\n");
-
                 // Betting
-                Console.WriteLine("Place your bet:");
-                Console.WriteLine($"1. {teamA} wins");
-                Console.WriteLine("2. Draw");
-                Console.WriteLine($"3. {teamB} wins");
-                Console.Write("Enter your choice: ");
-                string choiceText = Console.ReadLine();
+                string choiceText;
                 string chosenBet;
-                switch (choiceText)
+                do
                 {
-                    case "1":
-                        chosenBet = teamA + " wins";
-                        break;
-                    case "2":
-                        chosenBet = "Draw";
-                        break;
-                    case "3":
-                        chosenBet = teamB + " wins";
-                        break;
-                    default:
-                        chosenBet = "Invalid choice";
-                        break;
-                }
+                    // Display match information
+                    Console.WriteLine($"Match: {teamA} vs {teamB}\n");
+                    Console.WriteLine("Place your bet:");
+                    Console.WriteLine($"1. {teamA} wins");
+                    Console.WriteLine("2. Draw");
+                    Console.WriteLine($"3. {teamB} wins");
+                    Console.Write("Enter your choice: ");
+                    choiceText = Console.ReadLine();
+
+                    switch (choiceText)
+                    {
+                        case "1":
+                            chosenBet = teamA + " wins";
+                            break;
+                        case "2":
+                            chosenBet = "Draw";
+                            break;
+                        case "3":
+                            chosenBet = teamB + " wins";
+                            break;
+                        default:
+                            chosenBet = "Invalid choice";
+                            Console.Clear();
+                            Console.WriteLine("Please enter a valid choice (1, 2, or 3).");
+                            break;
+                    }
+                } while (choiceText != "1" && choiceText != "2" && choiceText != "3");
 
                 // Clear console
                 Console.Clear();
