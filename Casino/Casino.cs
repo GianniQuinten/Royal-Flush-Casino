@@ -204,7 +204,7 @@ namespace Royal_Flush_Casino
 					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
-                    NavigateToSportBetting(); 
+                    NavigateToSportBetting(player); 
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a correct number");
@@ -212,10 +212,10 @@ namespace Royal_Flush_Casino
             }
         }
 
-        void NavigateToSportBetting()
+        void NavigateToSportBetting(Player player)
         {
             SportBetting sportBetting = new SportBetting();
-            SportBetting.SportBettingMain();
+            SportBetting.SportBettingMain(player);
         }
 
 		void NavigateToSlotmachines(Player player)

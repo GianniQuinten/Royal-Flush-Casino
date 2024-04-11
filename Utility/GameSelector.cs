@@ -66,7 +66,7 @@ namespace Royal_Flush_Casino.Utility
 		}
 
 		// Method to select and engage in sports betting
-		public static void SportBettingMain()
+		public static void SportBettingMain(Player player)
 		{
 			Console.WriteLine("Welcome to Sports Betting!");
 
@@ -74,26 +74,32 @@ namespace Royal_Flush_Casino.Utility
 			Console.WriteLine("Choose the sport you want to bet on:");
 			Console.WriteLine("1. Football");
 			Console.WriteLine("2. Horse Racing");
+            Console.WriteLine("3. Go back to Casino Menu");
 
-			// Get user's choice of sport
-			Console.Write("Enter your choice (1/2): ");
+            // Get user's choice of sport
+            Console.Write("Enter your choice (1/2/3): ");
 			int sportChoice;
-			while (!int.TryParse(Console.ReadLine(), out sportChoice) || sportChoice < 1 || sportChoice > 2)
+			while (!int.TryParse(Console.ReadLine(), out sportChoice) || sportChoice < 1 || sportChoice > 3)
 			{
-				Console.WriteLine("Invalid choice. Please enter 1 or 2.");
-				Console.Write("Enter your choice (1/2): ");
+				Console.WriteLine("Invalid choice. Please enter 1, 2 or 3.");
+				Console.Write("Enter your choice (1/2/3): ");
 			}
 
 			// Call method based on user's choice of sport
 			switch (sportChoice)
 			{
 				case 1:
-					Football.BetOnFootball();
+					Football.BetOnFootball(player);
 					break;
 				case 2:
-					HorseRacing.BetOnHorseRacing();
+                    HorseRacing.BetOnHorseRacing(player);
 					break;
-			}
+				case 3:
+                    Console.Clear();
+                    Casino casino = new Casino();
+                    casino.enterCasino(player);
+                    break;
+            }
 		}
 
 		// Add more game selector methods as needed for different sections of your casino application

@@ -6,17 +6,20 @@ using System.Threading;
 namespace Royal_Flush_Casino.Game
 {
     // Abstract class for matches
-    public abstract class Match
+    internal abstract class Match
     {
         protected List<string> Teams { get; set; }
         protected Random Random { get; set; }
 
-        public abstract void Play();
+        public abstract void Play(Player player);
     }
 
     // Concrete class for football matches
-    public class FootballMatch : Match
+    internal class FootballMatch : Match
     {
+        // Set the bet price to 10 chips per game
+        private double gameCost = 10;
+
         public FootballMatch()
         {
             Teams = new List<string>
@@ -27,7 +30,7 @@ namespace Royal_Flush_Casino.Game
             Random = new Random();
         }
 
-        public override void Play()
+        public override void Play(Player player)
         {
             bool playAgain = true;
 
@@ -49,7 +52,7 @@ namespace Royal_Flush_Casino.Game
 
                 // Betting
                 string choiceText;
-                string chosenBet;
+                string chosenBet = "";
                 do
                 {
                     // Display match information
@@ -58,6 +61,10 @@ namespace Royal_Flush_Casino.Game
                     Console.WriteLine($"1. {teamA} wins");
                     Console.WriteLine("2. Draw");
                     Console.WriteLine($"3. {teamB} wins");
+                    Console.WriteLine("4. Go back to Sportbetting");
+
+                    Console.WriteLine();
+                    Console.WriteLine($"You currently have: {player.chips} chips, the price to play will be: {this.gameCost} chips.");
                     Console.Write("Enter your choice: ");
                     choiceText = Console.ReadLine();
 
@@ -65,12 +72,19 @@ namespace Royal_Flush_Casino.Game
                     {
                         case "1":
                             chosenBet = teamA + " wins";
+                            player.chips -= this.gameCost;
                             break;
                         case "2":
                             chosenBet = "Draw";
+                            player.chips -= this.gameCost;
                             break;
                         case "3":
                             chosenBet = teamB + " wins";
+                            player.chips -= this.gameCost;
+                            break;
+                        case "4":
+                            Console.Clear();
+                            GameSelector.SportBettingMain(player);
                             break;
                         default:
                             chosenBet = "Invalid choice";
@@ -169,14 +183,26 @@ namespace Royal_Flush_Casino.Game
                 if (choiceText == "1")
                 {
                     betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
+                    if (goalsA > goalsB) // If the chosen team wins
+                    {
+                        player.chips += this.gameCost * 2; // Award double the bet amount
+                    }
                 }
                 else if (choiceText == "2")
                 {
                     betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
+                    if (goalsA == goalsB) // If it's a draw
+                    {
+                        player.chips += this.gameCost * 2; // Award double the bet amount
+                    }
                 }
                 else if (choiceText == "3")
                 {
                     betOutcome = goalsA < goalsB ? "You win!" : "You lose!";
+                    if (goalsA < goalsB) // If the chosen team wins
+                    {
+                        player.chips += this.gameCost * 2.5; // Award double the bet amount
+                    }
                 }
                 else
                 {
@@ -184,6 +210,7 @@ namespace Royal_Flush_Casino.Game
                 }
 
                 Console.WriteLine($"Your bet outcome: {betOutcome}");
+                Console.WriteLine($"You currently have: {player.chips} chips!");
                 Console.WriteLine(); // Skip a line
 
                 Console.WriteLine("1. Play again");
@@ -200,7 +227,7 @@ namespace Royal_Flush_Casino.Game
                     case "2":
                         playAgain = false;
                         Console.Clear();
-                        GameSelector.SportBettingMain();
+                        GameSelector.SportBettingMain(player);
                         break;
                     case "3":
                         Environment.Exit(0);
@@ -216,10 +243,10 @@ namespace Royal_Flush_Casino.Game
 
     internal class Football
     {
-        public static void BetOnFootball()
+        public static void BetOnFootball(Player player)
         {
             Match footballMatch = new FootballMatch();
-            footballMatch.Play();
+            footballMatch.Play(player);
         }
     }
 }

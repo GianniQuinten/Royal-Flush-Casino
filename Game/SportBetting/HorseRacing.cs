@@ -5,14 +5,19 @@ namespace Royal_Flush_Casino.Game
 {
     internal class HorseRacing
     {
-        public static void BetOnHorseRacing()
+        public static void BetOnHorseRacing(Player player)
         {
+            // Set the bet price to 10 chips per game
+            double gameCost = 10;
+
             bool playAgain = true;
 
             while (playAgain)
             {
                 Console.WriteLine("You chose Horse Racing.");
                 Console.WriteLine("Select a horse (1-4): ");
+                Console.WriteLine(); // Skip line
+                Console.WriteLine($"You currently have: {player.chips} chips, the price to play will be: {gameCost} chips.");
                 int horseChoice;
                 while (!int.TryParse(Console.ReadLine(), out horseChoice) || horseChoice < 1 || horseChoice > 4)
                 {
@@ -86,17 +91,20 @@ namespace Royal_Flush_Casino.Game
                 if (horseChoice == winningHorse)
                 {
                     Console.WriteLine("Congratulations! You win!");
+                    player.chips += gameCost * 2.5;
                 }
                 else
                 {
                     Console.WriteLine("Sorry! You lose!");
+                    player.chips -= gameCost;
                 }
 
                 // Offer options to the user
                 string choice;
                 do
                 {
-                    Console.WriteLine();
+                    Console.WriteLine($"You currently have: {player.chips} chips!");
+                    Console.WriteLine(); // Skip a line
                     Console.WriteLine("1. Play again");
                     Console.WriteLine("2. Go back to sports betting");
                     Console.WriteLine("3. Exit the Casino");
@@ -109,7 +117,7 @@ namespace Royal_Flush_Casino.Game
                             break; // The loop will continue for playing again
                         case "2":
                             playAgain = false;
-                            GameSelector.SportBettingMain();
+                            GameSelector.SportBettingMain(player);
                             break;
                         case "3":
                             System.Environment.Exit(0);
