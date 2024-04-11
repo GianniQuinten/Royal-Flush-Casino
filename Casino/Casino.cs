@@ -200,11 +200,11 @@ namespace Royal_Flush_Casino
             {
                 case "1":
                     Console.WriteLine("You walk to the slot machines.");
-					NavigateToSlotmachines(player); // Ensure this method is called correctly
+					NavigateToSlotmachines(player); 
 					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
-                    NavigateToSportBetting(); // Ensure this method is called correctly
+                    NavigateToSportBetting(); 
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a correct number");
