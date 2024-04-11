@@ -205,8 +205,8 @@ namespace Royal_Flush_Casino
 					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
-                    NavigateToSportBetting();
-					break;
+                    NavigateToSportBetting(player); 
+                    break;
 				case "3":
 					Console.WriteLine("You walk to the Table Games");
 					NavigateToTableGames();
@@ -217,10 +217,10 @@ namespace Royal_Flush_Casino
             }
         }
 
-        void NavigateToSportBetting()
+        void NavigateToSportBetting(Player player)
         {
             SportBetting sportBetting = new SportBetting();
-            SportBetting.SportBettingMain();
+            SportBetting.SportBettingMain(player);
         }
 
 		void NavigateToSlotmachines(Player player)

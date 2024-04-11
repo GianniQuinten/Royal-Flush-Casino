@@ -12,7 +12,7 @@ namespace Royal_Flush_Casino.Game
 		protected string[][] slots;
 
 		// The cost to play a single spin on this slot machine. This can be overridden by other slotmachine classes.
-		protected double spinCost;
+		protected double spinCost = 5;
 
 		// dictionary for the icons to assign a multiplier
 		protected Dictionary<string, double> symbolPayouts = new Dictionary<string, double>();
