@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Royal Flush Casino")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1569f604679a8152cb3c6183bdf85a0e55160975")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16e7fa3dd50cf59bf042c6779f71688499f17864")]
 [assembly: System.Reflection.AssemblyProductAttribute("Royal Flush Casino")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Royal Flush Casino")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
