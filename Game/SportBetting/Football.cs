@@ -185,7 +185,7 @@ namespace Royal_Flush_Casino.Game
                     betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
                     if (goalsA > goalsB) // If the chosen team wins
                     {
-                        player.chips += this.gameCost * 2; // Award double the bet amount
+                        player.chips += this.gameCost * 2.5; // Award double the bet amount
                     }
                 }
                 else if (choiceText == "2")
@@ -193,7 +193,7 @@ namespace Royal_Flush_Casino.Game
                     betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
                     if (goalsA == goalsB) // If it's a draw
                     {
-                        player.chips += this.gameCost * 2; // Award double the bet amount
+                        player.chips += this.gameCost * 2.5; // Award double the bet amount
                     }
                 }
                 else if (choiceText == "3")
