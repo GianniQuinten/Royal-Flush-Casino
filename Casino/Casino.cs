@@ -194,7 +194,8 @@ namespace Royal_Flush_Casino
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("1. Walk to the slot machines.");
             Console.WriteLine("2. Walk to the sport betting section.");
-            string gameModeSelector = Console.ReadLine();
+			Console.WriteLine("3. Walk to the table games section.");
+			string gameModeSelector = Console.ReadLine();
 
             switch (gameModeSelector)
             {
@@ -204,8 +205,12 @@ namespace Royal_Flush_Casino
 					break;
                 case "2":
                     Console.WriteLine("You walk to the sport betting section.");
-                    NavigateToSportBetting(); 
-                    break;
+                    NavigateToSportBetting();
+					break;
+				case "3":
+					Console.WriteLine("You walk to the Table Games");
+					NavigateToTableGames();
+					break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a correct number");
                     break;
@@ -221,6 +226,11 @@ namespace Royal_Flush_Casino
 		void NavigateToSlotmachines(Player player)
 		{
 			GameSelector.ChooseSlotMachine(player);
+		}
+
+		void NavigateToTableGames()
+		{
+			GameSelector.ChooseTableGame();
 		}
 	}
 }

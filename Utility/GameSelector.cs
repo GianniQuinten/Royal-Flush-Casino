@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Royal_Flush_Casino.Game;
 using Royal_Flush_Casino.Game.Slotmachine;
 // Ensure you include all necessary using directives for your game namespaces
@@ -94,6 +95,11 @@ namespace Royal_Flush_Casino.Utility
 					HorseRacing.BetOnHorseRacing();
 					break;
 			}
+		}
+
+		public static void ChooseTableGame()
+		{
+			TableGame.BlackJack(new string[] { });
 		}
 
 		// Add more game selector methods as needed for different sections of your casino application

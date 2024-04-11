@@ -8,8 +8,7 @@ namespace Royal_Flush_Casino.Game
 {
     internal class TableGame
     {
-        
-        static void blackjack(string[] args)
+        public static void BlackJack(string[] args)
         {
             const double initialChips = 10.000;
             Random randomGenerator = new Random();
