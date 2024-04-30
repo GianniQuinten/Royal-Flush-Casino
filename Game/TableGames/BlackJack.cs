@@ -63,8 +63,23 @@ namespace Royal_Flush_Casino.Game
                         }
                         else
                         {
-                            // Anders is het de beurt van de dealer
-                            // Implementeer DealerTurn-methode hier
+                            // It's the dealer's turn
+                            DealerTurn(randomGenerator, dealerHand, playerHand);
+
+                            // Determine the winner and adjust player's chips accordingly
+                            int playerHandValue = CalculateHandValue(playerHand);
+                            int dealerHandValue = CalculateHandValue(dealerHand);
+
+                            if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
+                            {
+                                Console.WriteLine("Player wins!");
+                                playerChips += bet;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dealer wins!");
+                                playerChips -= bet;
+                            }
                         }
 
                         break;
@@ -196,5 +211,21 @@ namespace Royal_Flush_Casino.Game
             return sum;
         }
 
+        private static void DealerTurn(Random randomGenerator, string[] dealerHand, string[] playerHand)
+        {
+            // Display the dealer's hand
+            Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
+
+            // Continue hitting until the dealer's hand value is 17 or higher or smaller than player's hand value
+            while (CalculateHandValue(dealerHand) < 17 || CalculateHandValue(dealerHand) < CalculateHandValue(playerHand))
+            {
+                string newCard = DealCard(randomGenerator);
+                Console.WriteLine("Dealer draws: " + newCard);
+                dealerHand = AddCardToHand(dealerHand, newCard);
+            }
+
+            // Display the final dealer's hand
+            Console.WriteLine("Dealer's final hand: " + HandToString(dealerHand));
+        }
     }
 }
