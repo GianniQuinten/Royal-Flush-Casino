@@ -75,7 +75,7 @@ namespace Royal_Flush_Casino.Utility
 			Console.WriteLine("Choose the sport you want to bet on:");
 			Console.WriteLine("1. Football");
 			Console.WriteLine("2. Horse Racing");
-            Console.WriteLine("3. Go back to Casino Menu");
+            Console.WriteLine("3. Go back to the Casino Menu");
 
             // Get user's choice of sport
             Console.Write("Enter your choice (1/2/3): ");
