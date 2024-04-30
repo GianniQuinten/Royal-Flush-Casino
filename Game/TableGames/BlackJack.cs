@@ -33,9 +33,14 @@ namespace Royal_Flush_Casino.Game
                             break;
                         }
 
+                        // When you start a game clear the console so you have a clear working space for the game to play on
+                        Console.Clear();
+
                         Console.WriteLine("Shuffling the deck...");
                         Console.WriteLine("Done shuffling the deck.");
                         Console.WriteLine("Serving the cards");
+                        // Whitespace line
+                        Console.WriteLine();
 
                         double bet = GetBet(playerChips);
 
@@ -45,8 +50,6 @@ namespace Royal_Flush_Casino.Game
                         // Display initial hands
                         Console.WriteLine("Your hand: " + HandToString(playerHand));
                         Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
-
-
                         break;
 
                     case "2":
@@ -65,17 +68,35 @@ namespace Royal_Flush_Casino.Game
             // Logic for getting player's bet
             return 0;
         }
-
-        private static int[] DealInitialHand(Random randomGenerator)
+        private static string[] DealInitialHand(Random randomGenerator)
         {
-            // Logic for dealing initial hand
-            return new int[2];
+            string[] hand = new string[2];
+            hand[0] = DealCard(randomGenerator);
+            hand[1] = DealCard(randomGenerator);
+            return hand;
         }
 
-        private static string HandToString(int[] hand)
+        // These are all the cards we are using in BlackJack.
+        private static string[] suits = { "\u2665", "\u2666", "\u2663", "\u2660" }; // Hearts, Diamonds, Clubs, Spades
+        private static string[] faces = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" }; // Ace, 2-10, Jack, Queen, King
+
+        private static string DealCard(Random randomGenerator)
         {
-            // Logic for converting hand to string
-            return "";
+            int suitIndex = randomGenerator.Next(0, suits.Length);
+            int faceIndex = randomGenerator.Next(0, faces.Length);
+            string card = faces[faceIndex] + suits[suitIndex];
+            return card;
+        }
+
+
+        private static string HandToString(string[] hand)
+        {
+            string handString = "";
+            foreach (string card in hand)
+            {
+                handString += card + " ";
+            }
+            return handString.Trim();
         }
     }
 }
