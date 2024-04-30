@@ -7,6 +7,7 @@ namespace Royal_Flush_Casino.Game
         public static void PlayBlackJack(Player player)
         {
             double playerChips = player.chips;
+            Random randomGenerator = new Random(); // Initialize random generator
 
             Console.Title = "BLACKJACK";
             Console.WriteLine("Welcome to the Royal Flush Casino!");
@@ -32,7 +33,19 @@ namespace Royal_Flush_Casino.Game
                             break;
                         }
 
-                        // Hier gaat uiteindelijk de code komen om te spelen.
+                        Console.WriteLine("Shuffling the deck...");
+                        Console.WriteLine("Done shuffling the deck.");
+                        Console.WriteLine("Serving the cards");
+
+                        double bet = GetBet(playerChips);
+
+                        var playerHand = DealInitialHand(randomGenerator);
+                        var dealerHand = DealInitialHand(randomGenerator);
+
+                        // Display initial hands
+                        Console.WriteLine("Your hand: " + HandToString(playerHand));
+                        Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
+
 
                         break;
 
@@ -46,6 +59,23 @@ namespace Royal_Flush_Casino.Game
                         break;
                 }
             }
+        }
+        private static double GetBet(double playerChips)
+        {
+            // Logic for getting player's bet
+            return 0;
+        }
+
+        private static int[] DealInitialHand(Random randomGenerator)
+        {
+            // Logic for dealing initial hand
+            return new int[2];
+        }
+
+        private static string HandToString(int[] hand)
+        {
+            // Logic for converting hand to string
+            return "";
         }
     }
 }
