@@ -50,6 +50,23 @@ namespace Royal_Flush_Casino.Game
                         // Display initial hands
                         Console.WriteLine("Your hand: " + HandToString(playerHand));
                         Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
+
+                        // Play the game
+                        bool playerBusted = PlayerTurn(randomGenerator, playerHand);
+
+                        // If player has above 21 he gets busted
+                        if (playerBusted)
+                        {
+                            Console.WriteLine("Player busted! You lose.");
+                            // You lose your bet becose you lost the game.
+                            playerChips -= bet;
+                        }
+                        else
+                        {
+                            // Anders is het de beurt van de dealer
+                            // Implementeer DealerTurn-methode hier
+                        }
+
                         break;
 
                     case "2":
@@ -98,5 +115,86 @@ namespace Royal_Flush_Casino.Game
             }
             return handString.Trim();
         }
+
+        private static bool PlayerTurn(Random randomGenerator, string[] playerHand)
+        {
+            while (true)
+            {
+                Console.WriteLine("Do you want to hit? (y/n)");
+                string input = Console.ReadLine().ToLower();
+
+                if (input == "y")
+                {
+                    string newCard = DealCard(randomGenerator);
+                    Console.WriteLine("You were dealt: " + newCard);
+                    playerHand = AddCardToHand(playerHand, newCard);
+
+                    Console.WriteLine("Your hand: " + HandToString(playerHand));
+
+                    int handValue = CalculateHandValue(playerHand);
+                    if (handValue == 21)
+                    {
+                        Console.WriteLine("You got 21!");
+                        return false; // Player stands
+                    }
+                    else if (handValue > 21)
+                    {
+                        Console.WriteLine("Busted! You lose.");
+                        return true; // Player busted
+                    }
+                }
+                else if (input == "n")
+                {
+                    return false; // Player stands
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                }
+            }
+        }
+
+        private static string[] AddCardToHand(string[] hand, string newCard)
+        {
+            Array.Resize(ref hand, hand.Length + 1);
+            hand[hand.Length - 1] = newCard;
+            return hand;
+        }
+
+        private static int CalculateHandValue(string[] hand)
+        {
+            int sum = 0;
+            int aceCount = 0;
+
+            foreach (string card in hand)
+            {
+                int value = 0;
+                if (card[0] == 'A')
+                {
+                    value = 11;
+                    aceCount++;
+                }
+                else if (card[0] == 'J' || card[0] == 'Q' || card[0] == 'K')
+                {
+                    value = 10;
+                }
+                else
+                {
+                    value = int.Parse(card.Substring(0, card.Length - 1));
+                }
+
+                sum += value;
+            }
+
+            // Adjust the value of aces if the sum exceeds 21
+            while (sum > 21 && aceCount > 0)
+            {
+                sum -= 10;
+                aceCount--;
+            }
+
+            return sum;
+        }
+
     }
 }
