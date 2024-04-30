@@ -216,7 +216,7 @@ namespace Royal_Flush_Casino.Game
             // Display the dealer's hand
             Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
 
-            // Continue hitting until the dealer's hand value is 17 or higher or smaller than player's hand value
+            // Continue hitting until the dealer's hand value is 17 or higher and smaller than player's hand value
             while (CalculateHandValue(dealerHand) < 17 || CalculateHandValue(dealerHand) < CalculateHandValue(playerHand))
             {
                 string newCard = DealCard(randomGenerator);
