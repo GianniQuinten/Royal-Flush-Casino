@@ -8,16 +8,15 @@ namespace Royal_Flush_Casino.Game
         {
             double playerChips = player.chips;
             Random randomGenerator = new Random(); // Initialize random generator
-
+            Console.Clear();
             Console.Title = "BLACKJACK";
-            Console.WriteLine("Welcome to the Royal Flush Casino!");
-            Console.WriteLine("21\u2665BLACKJACK\u2665");
-            Console.WriteLine("");
-            Console.WriteLine("Welcome!");
+            Console.WriteLine("Welcome to \u2665BLACKJACK\u2666!");
             Console.WriteLine("You have " + playerChips + " chips.");
 
             while (true)
             {
+                // Whitespace line
+                Console.WriteLine();
                 Console.WriteLine("1. Start a new game");
                 Console.WriteLine("2. Go back to the Casino Menu");
                 Console.WriteLine("3. Exit the Casino");
@@ -35,7 +34,6 @@ namespace Royal_Flush_Casino.Game
 
                         // When you start a game clear the console so you have a clear working space for the game to play on
                         Console.Clear();
-
                         Console.WriteLine("Shuffling the deck...");
                         Console.WriteLine("Done shuffling the deck.");
                         Console.WriteLine("Serving the cards");
@@ -47,6 +45,8 @@ namespace Royal_Flush_Casino.Game
                         var playerHand = DealInitialHand(randomGenerator);
                         var dealerHand = DealInitialHand(randomGenerator);
 
+                        // Whitespace line
+                        Console.WriteLine();
                         // Display initial hands
                         Console.WriteLine("Your hand: " + HandToString(playerHand));
                         Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
@@ -57,9 +57,11 @@ namespace Royal_Flush_Casino.Game
                         // If player has above 21 he gets busted
                         if (playerBusted)
                         {
-                            Console.WriteLine("Player busted! You lose.");
-                            // You lose your bet becose you lost the game.
+                            // Whitespace line
+                            Console.WriteLine();
+                            Console.WriteLine("Player busted!");               
                             playerChips -= bet;
+                            Console.WriteLine("Unfortunately! You lost " + bet + " chips. You now have " + playerChips + " chips.");
                         }
                         else
                         {
@@ -72,13 +74,19 @@ namespace Royal_Flush_Casino.Game
 
                             if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
                             {
+                                // Whitespace line
+                                Console.WriteLine();
                                 Console.WriteLine("Player wins!");
                                 playerChips += bet;
+                                Console.WriteLine("Congratulations! You won " + bet + " chips. You now have " + playerChips + " chips.");
                             }
                             else
                             {
+                                // Whitespace line
+                                Console.WriteLine();
                                 Console.WriteLine("Dealer wins!");
                                 playerChips -= bet;
+                                Console.WriteLine("Unfortunately! You lost " + bet + " chips. You now have " + playerChips + " chips.");
                             }
                         }
 
@@ -97,9 +105,29 @@ namespace Royal_Flush_Casino.Game
         }
         private static double GetBet(double playerChips)
         {
-            // Logic for getting player's bet
-            return 0;
+            while (true)
+            {
+                Console.Write("Enter your bet: ");
+                string input = Console.ReadLine();
+
+                if (double.TryParse(input, out double bet))
+                {
+                    if (bet > 0 && bet <= playerChips)
+                    {
+                        return bet;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid bet amount. Please enter a bet between 1 and " + playerChips + ".");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
         }
+
         private static string[] DealInitialHand(Random randomGenerator)
         {
             string[] hand = new string[2];
@@ -141,6 +169,8 @@ namespace Royal_Flush_Casino.Game
                 if (input == "y")
                 {
                     string newCard = DealCard(randomGenerator);
+                    // Whitespace line
+                    Console.WriteLine();
                     Console.WriteLine("You were dealt: " + newCard);
                     playerHand = AddCardToHand(playerHand, newCard);
 
@@ -213,6 +243,8 @@ namespace Royal_Flush_Casino.Game
 
         private static void DealerTurn(Random randomGenerator, string[] dealerHand, string[] playerHand)
         {
+            // Whitespace line
+            Console.WriteLine();
             // Display the dealer's hand
             Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
 
