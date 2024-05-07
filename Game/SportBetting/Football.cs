@@ -64,7 +64,7 @@ namespace Royal_Flush_Casino.Game
                     Console.WriteLine("4. Go back to Sportbetting");
 
                     Console.WriteLine();
-                    Console.WriteLine($"You currently have: {player.chips} chips, the price to play will be: {this.gameCost} chips.");
+                    Console.WriteLine($"You currently have: {player.Chips} chips, the price to play will be: {this.gameCost} chips.");
                     Console.Write("Enter your choice: ");
                     choiceText = Console.ReadLine();
 
@@ -72,15 +72,15 @@ namespace Royal_Flush_Casino.Game
                     {
                         case "1":
                             chosenBet = teamA + " wins";
-                            player.chips -= this.gameCost;
+                            player.Chips -= this.gameCost;
                             break;
                         case "2":
                             chosenBet = "Draw";
-                            player.chips -= this.gameCost;
+                            player.Chips -= this.gameCost;
                             break;
                         case "3":
                             chosenBet = teamB + " wins";
-                            player.chips -= this.gameCost;
+                            player.Chips -= this.gameCost;
                             break;
                         case "4":
                             Console.Clear();
@@ -184,8 +184,8 @@ namespace Royal_Flush_Casino.Game
                 {
                     betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
                     if (goalsA > goalsB) // If the chosen team wins
-                    {
-                        player.chips += this.gameCost * 2.5; // Award double the bet amount
+                    {   
+                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
                     }
                 }
                 else if (choiceText == "2")
@@ -193,7 +193,7 @@ namespace Royal_Flush_Casino.Game
                     betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
                     if (goalsA == goalsB) // If it's a draw
                     {
-                        player.chips += this.gameCost * 2.5; // Award double the bet amount
+                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
                     }
                 }
                 else if (choiceText == "3")
@@ -201,7 +201,7 @@ namespace Royal_Flush_Casino.Game
                     betOutcome = goalsA < goalsB ? "You win!" : "You lose!";
                     if (goalsA < goalsB) // If the chosen team wins
                     {
-                        player.chips += this.gameCost * 2.5; // Award double the bet amount
+                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
                     }
                 }
                 else
@@ -210,7 +210,7 @@ namespace Royal_Flush_Casino.Game
                 }
 
                 Console.WriteLine($"Your bet outcome: {betOutcome}");
-                Console.WriteLine($"You currently have: {player.chips} chips!");
+                Console.WriteLine($"You currently have: {player.Chips} chips!");
                 Console.WriteLine(); // Skip a line
 
                 Console.WriteLine("1. Play again");

@@ -1,52 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Royal_Flush_Casino
+﻿public class Player
 {
-	internal class Player
+	private double balance;
+	private double moneyOnHand;
+	private double chips;
+
+	// Properties
+	public double Balance
 	{
-		public double  balance;
-		public double moneyOnHand;
-		public double chips;
+		get { return balance; }
+		private set { balance = value; } 
+	}
+	public double MoneyOnHand
+	{
+		get { return moneyOnHand; }
+		set { moneyOnHand = value; }
+	}
+	public double Chips
+	{
+		get { return chips; }
+		set { chips = value; }
+	}
 
-		public Player(double balance, double moneyOnHand, double chips)
-		{
-			this.balance = balance;
-			this.moneyOnHand = moneyOnHand;
-			this.chips = chips;
-		}
+	// Constructor
+	public Player(double balance, double moneyOnHand, double chips)
+	{
+		this.Balance = balance;
+		this.MoneyOnHand = moneyOnHand;
+		this.Chips = chips;
+	}
 
-		public double getBalance()
-		{
-			return balance;
-		}
+	// Methods to modify the balance 
+	public void AddToBalance(double amount)
+	{
+		if (amount < 0)
+			throw new InvalidOperationException("Cannot add a negative amount.");
+		Balance += amount;
+	}
 
-		public void setBalance(double newBalance)
-		{
-			balance = newBalance;
-		}
-
-		public double getMoneyOnHand()
-		{
-			return moneyOnHand;
-		}
-
-		public void setMoneyOnHand(double newMoneyOnHand)
-		{
-			moneyOnHand = newMoneyOnHand;
-		}
-
-		public double getChips()
-		{
-			return chips;
-		}
-
-		public void setChips(double newChips)
-		{
-			chips = newChips;
-		}
+	public void SubtractFromBalance(double amount)
+	{
+		if (amount < 0)
+			throw new InvalidOperationException("Cannot subtract a negative amount.");
+		if (amount > Balance)
+			throw new InvalidOperationException("Insufficient balance.");
+		Balance -= amount;
 	}
 }
+

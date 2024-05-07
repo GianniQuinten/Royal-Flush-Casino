@@ -17,7 +17,7 @@ namespace Royal_Flush_Casino.Game
                 Console.WriteLine("You chose Horse Racing.");
                 Console.WriteLine("Select a horse (1-4): ");
                 Console.WriteLine(); // Skip line
-                Console.WriteLine($"You currently have: {player.chips} chips, the price to play will be: {gameCost} chips.");
+                Console.WriteLine($"You currently have: {player.Chips} chips, the price to play will be: {gameCost} chips.");
                 int horseChoice;
                 while (!int.TryParse(Console.ReadLine(), out horseChoice) || horseChoice < 1 || horseChoice > 4)
                 {
@@ -91,19 +91,19 @@ namespace Royal_Flush_Casino.Game
                 if (horseChoice == winningHorse)
                 {
                     Console.WriteLine("Congratulations! You win!");
-                    player.chips += gameCost * 2.5;
+                    player.Chips += gameCost * 2.5;
                 }
                 else
                 {
                     Console.WriteLine("Sorry! You lose!");
-                    player.chips -= gameCost;
+                    player.Chips -= gameCost;
                 }
 
                 // Offer options to the user
                 string choice;
                 do
                 {
-                    Console.WriteLine($"You currently have: {player.chips} chips!");
+                    Console.WriteLine($"You currently have: {player.Chips} chips!");
                     Console.WriteLine(); // Skip a line
                     Console.WriteLine("1. Play again");
                     Console.WriteLine("2. Go back to sports betting");

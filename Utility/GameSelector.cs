@@ -57,7 +57,7 @@ namespace Royal_Flush_Casino.Utility
 					// Call the method in the Casino class to return to the main casino interface
 					Console.Clear();
 					Casino casino = new Casino();
-					casino.enterCasino(player);
+					casino.EnterCasino(player);
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter a correct number");
@@ -98,7 +98,7 @@ namespace Royal_Flush_Casino.Utility
 				case 3:
                     Console.Clear();
                     Casino casino = new Casino();
-                    casino.enterCasino(player);
+                    casino.EnterCasino(player);
                     break;
             }
 		}

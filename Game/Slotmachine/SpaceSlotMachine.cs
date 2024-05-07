@@ -42,15 +42,15 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 
 			while (keepPlaying)
 			{
-				Console.WriteLine($"You currently have: {player.chips} chips.");
+				Console.WriteLine($"You currently have: {player.Chips} chips.");
 				Console.WriteLine($"The price is: {this.spinCost} chips, is that alright? (yes/no)");
 				string response = Console.ReadLine().Trim().ToLower();
 
 				if (response == "yes")
 				{
-					if (player.chips >= this.spinCost)
+					if (player.Chips >= this.spinCost)
 					{
-						player.chips -= this.spinCost; // Deduct the spin cost
+						player.Chips -= this.spinCost; // Deduct the spin cost
 						Console.WriteLine("Great! Let's play.");
 
 						base.Play(player); // Actual game play happens here
