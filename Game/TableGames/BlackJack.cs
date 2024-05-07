@@ -17,7 +17,7 @@ namespace Royal_Flush_Casino.Game
         public static void PlayBlackJack(Player player)
         {
             Console.Clear();
-            Console.WriteLine($"Welcome to BLACKJACK!\nYou have {player.chips} chips.");
+            Console.WriteLine($"Welcome to BLACKJACK!\nYou have {player.Chips} chips.");
 
             while (true)
             {
@@ -28,7 +28,7 @@ namespace Royal_Flush_Casino.Game
                 switch (choice)
                 {
                     case "1":
-                        if (player.chips <= 0)
+                        if (player.Chips <= 0)
                         {
                             Console.WriteLine("You are out of chips. Please buy more at the Cashier.");
                             continue;
@@ -38,7 +38,7 @@ namespace Royal_Flush_Casino.Game
                     case "2":
                         Console.Clear();
                         Casino casino = new Casino();
-                        casino.enterCasino(player);
+                        casino.EnterCasino(player);
                         break;
                     case "3":
                         Environment.Exit(0); // Exits the application
@@ -54,7 +54,7 @@ namespace Royal_Flush_Casino.Game
         private static void PlayGame(Player player)
         {
             Console.Clear();
-            double bet = GetBet(player.chips); // Ask player to make a bet
+            double bet = GetBet(player.Chips); // Ask player to make a bet
             var playerHand = DealInitialHand(); // Deal initial hand to player
             var dealerHand = DealInitialHand(); // Deal initial hand to dealer
 
@@ -64,7 +64,7 @@ namespace Royal_Flush_Casino.Game
             if (playerBusted)
             {
                 Console.WriteLine("Player busted!");
-                player.chips -= bet; // Deduct bet from player's chips
+                player.Chips -= bet; // Deduct bet from player's chips
             }
             else
             {
@@ -76,15 +76,15 @@ namespace Royal_Flush_Casino.Game
                 if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
                 {
                     Console.WriteLine("Player wins!");
-                    player.chips += bet; // Add bet to player's chips
+                    player.Chips += bet; // Add bet to player's chips
                 }
                 else
                 {
                     Console.WriteLine("Dealer wins!");
-                    player.chips -= bet; // Deduct bet from player's chips
+                    player.Chips -= bet; // Deduct bet from player's chips
                 }
             }
-            Console.WriteLine($"You now have {player.chips} chips.");
+            Console.WriteLine($"You now have {player.Chips} chips.");
         }
 
         // Prompt the player to enter a bet and validate it.
