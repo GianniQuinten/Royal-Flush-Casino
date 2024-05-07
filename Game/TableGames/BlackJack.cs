@@ -4,260 +4,173 @@ namespace Royal_Flush_Casino.Game
 {
     internal class BlackJack
     {
+        // Random object to generate random numbers, used for card dealing
+        private static Random random = new Random();
+
+        // Array of card suits
+        private static string[] suits = { "♥", "♦", "♣", "♠" };
+
+        // Array of card faces
+        private static string[] faces = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+        // Starts the Blackjack game loop where the player can start new games, go back, or exit.
         public static void PlayBlackJack(Player player)
         {
-            double playerChips = player.chips;
-            Random randomGenerator = new Random(); // Initialize random generator
             Console.Clear();
-            Console.Title = "BLACKJACK";
-            Console.WriteLine("Welcome to \u2665BLACKJACK\u2666!");
-            Console.WriteLine("You have " + playerChips + " chips.");
+            Console.WriteLine($"Welcome to BLACKJACK!\nYou have {player.chips} chips.");
 
             while (true)
             {
-                // Whitespace line
-                Console.WriteLine();
-                Console.WriteLine("1. Start a new game");
-                Console.WriteLine("2. Go back to the Casino Menu");
-                Console.WriteLine("3. Exit the Casino");
+                Console.WriteLine("\n1. Start a new game\n2. Go back to the Casino Menu\n3. Exit the Casino");
                 Console.Write("Enter your choice: ");
-                string selectMenuOption = Console.ReadLine();
+                string choice = Console.ReadLine();
 
-                switch (selectMenuOption)
+                switch (choice)
                 {
                     case "1":
-                        if (playerChips <= 0)
+                        if (player.chips <= 0)
                         {
-                            Console.WriteLine("You are out of chips. Please buy more chips at the Cashier.");
-                            break;
+                            Console.WriteLine("You are out of chips. Please buy more at the Cashier.");
+                            continue;
                         }
-
-                        // When you start a game clear the console so you have a clear working space for the game to play on
-                        Console.Clear();
-                        Console.WriteLine("Shuffling the deck...");
-                        Console.WriteLine("Done shuffling the deck.");
-                        Console.WriteLine("Serving the cards");
-                        // Whitespace line
-                        Console.WriteLine();
-
-                        double bet = GetBet(playerChips);
-
-                        var playerHand = DealInitialHand(randomGenerator);
-                        var dealerHand = DealInitialHand(randomGenerator);
-
-                        // Whitespace line
-                        Console.WriteLine();
-                        // Display initial hands
-                        Console.WriteLine("Your hand: " + HandToString(playerHand));
-                        Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
-
-                        // Play the game
-                        bool playerBusted = PlayerTurn(randomGenerator, playerHand);
-
-                        // If player has above 21 he gets busted
-                        if (playerBusted)
-                        {
-                            // Whitespace line
-                            Console.WriteLine();
-                            Console.WriteLine("Player busted!");               
-                            playerChips -= bet;
-                            Console.WriteLine("Unfortunately! You lost " + bet + " chips. You now have " + playerChips + " chips.");
-                        }
-                        else
-                        {
-                            // It's the dealer's turn
-                            DealerTurn(randomGenerator, dealerHand, playerHand);
-
-                            // Determine the winner and adjust player's chips accordingly
-                            int playerHandValue = CalculateHandValue(playerHand);
-                            int dealerHandValue = CalculateHandValue(dealerHand);
-
-                            if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
-                            {
-                                // Whitespace line
-                                Console.WriteLine();
-                                Console.WriteLine("Player wins!");
-                                playerChips += bet;
-                                Console.WriteLine("Congratulations! You won " + bet + " chips. You now have " + playerChips + " chips.");
-                            }
-                            else
-                            {
-                                // Whitespace line
-                                Console.WriteLine();
-                                Console.WriteLine("Dealer wins!");
-                                playerChips -= bet;
-                                Console.WriteLine("Unfortunately! You lost " + bet + " chips. You now have " + playerChips + " chips.");
-                            }
-                        }
-
+                        PlayGame(player);
                         break;
-
                     case "2":
-                        Console.Clear();
-                        Casino casino = new Casino();
-                        casino.enterCasino(player);
-                        break;
+                        return; // Control returns to the higher menu system or main menu
                     case "3":
-                        System.Environment.Exit(0);
+                        Environment.Exit(0); // Exits the application
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Try again.");
                         break;
                 }
             }
         }
+
+        // Handles the logic for playing a single game of Blackjack.
+        private static void PlayGame(Player player)
+        {
+            Console.Clear();
+            double bet = GetBet(player.chips); // Ask player to make a bet
+            var playerHand = DealInitialHand(); // Deal initial hand to player
+            var dealerHand = DealInitialHand(); // Deal initial hand to dealer
+
+            Console.WriteLine($"Your hand: {HandToString(playerHand)}\nDealer's hand: {HandToString(dealerHand)}");
+
+            bool playerBusted = PlayerTurn(playerHand); // Player takes their turn
+            if (playerBusted)
+            {
+                Console.WriteLine("Player busted!");
+                player.chips -= bet; // Deduct bet from player's chips
+            }
+            else
+            {
+                DealerTurn(dealerHand, CalculateHandValue(playerHand)); // Dealer takes their turn
+                int playerHandValue = CalculateHandValue(playerHand);
+                int dealerHandValue = CalculateHandValue(dealerHand);
+
+                // Compare hand values to determine the winner
+                if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
+                {
+                    Console.WriteLine("Player wins!");
+                    player.chips += bet; // Add bet to player's chips
+                }
+                else
+                {
+                    Console.WriteLine("Dealer wins!");
+                    player.chips -= bet; // Deduct bet from player's chips
+                }
+            }
+            Console.WriteLine($"You now have {player.chips} chips.");
+        }
+
+        // Prompt the player to enter a bet and validate it.
         private static double GetBet(double playerChips)
         {
             while (true)
             {
                 Console.Write("Enter your bet: ");
-                string input = Console.ReadLine();
-
-                if (double.TryParse(input, out double bet))
-                {
-                    if (bet > 0 && bet <= playerChips)
-                    {
-                        return bet;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid bet amount. Please enter a bet between 1 and " + playerChips + ".");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                }
+                if (double.TryParse(Console.ReadLine(), out double bet) && bet > 0 && bet <= playerChips)
+                    return bet;
+                Console.WriteLine($"Invalid bet. Enter a bet between 1 and {playerChips}.");
             }
         }
 
-        private static string[] DealInitialHand(Random randomGenerator)
+        // Deals an initial hand of two cards.
+        private static string[] DealInitialHand()
         {
-            string[] hand = new string[2];
-            hand[0] = DealCard(randomGenerator);
-            hand[1] = DealCard(randomGenerator);
-            return hand;
+            return new string[] { DealCard(), DealCard() };
         }
 
-        // These are all the cards we are using in BlackJack.
-        private static string[] suits = { "\u2665", "\u2666", "\u2663", "\u2660" }; // Hearts, Diamonds, Clubs, Spades
-        private static string[] faces = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" }; // Ace, 2-10, Jack, Queen, King
-
-        private static string DealCard(Random randomGenerator)
+        // Deals a single card by randomly choosing a suit and a face.
+        private static string DealCard()
         {
-            int suitIndex = randomGenerator.Next(0, suits.Length);
-            int faceIndex = randomGenerator.Next(0, faces.Length);
-            string card = faces[faceIndex] + suits[suitIndex];
-            return card;
+            int suitIndex = random.Next(suits.Length);
+            int faceIndex = random.Next(faces.Length);
+            return faces[faceIndex] + suits[suitIndex];
         }
 
-
+        // Converts an array of card strings into a single string.
         private static string HandToString(string[] hand)
         {
-            string handString = "";
-            foreach (string card in hand)
-            {
-                handString += card + " ";
-            }
-            return handString.Trim();
+            return string.Join(" ", hand);
         }
 
-        private static bool PlayerTurn(Random randomGenerator, string[] playerHand)
+        // Manages the player's turn where they can choose to hit (take more cards) or stand.
+        private static bool PlayerTurn(string[] hand)
         {
             while (true)
             {
-                Console.WriteLine("Do you want to hit? (y/n)");
-                string input = Console.ReadLine().ToLower();
-
-                if (input == "y")
+                Console.Write("Do you want to hit? (y/n): ");
+                if (Console.ReadLine().Trim().ToLower() == "y")
                 {
-                    string newCard = DealCard(randomGenerator);
-                    // Whitespace line
+                    string card = DealCard();
                     Console.WriteLine();
-                    Console.WriteLine("You were dealt: " + newCard);
-                    playerHand = AddCardToHand(playerHand, newCard);
-
-                    Console.WriteLine("Your hand: " + HandToString(playerHand));
-
-                    int handValue = CalculateHandValue(playerHand);
-                    if (handValue == 21)
-                    {
-                        Console.WriteLine("You got 21!");
-                        return false; // Player stands
-                    }
-                    else if (handValue > 21)
-                    {
-                        Console.WriteLine("Busted! You lose.");
-                        return true; // Player busted
-                    }
-                }
-                else if (input == "n")
-                {
-                    return false; // Player stands
+                    Console.WriteLine($"You were dealt: {card}");
+                    Array.Resize(ref hand, hand.Length + 1);
+                    hand[hand.Length - 1] = card;
+                    Console.WriteLine($"Your hand: {HandToString(hand)}");
+                    int handValue = CalculateHandValue(hand);
+                    if (handValue > 21) return true;
+                    if (handValue == 21) return false;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                    return false;
                 }
             }
         }
 
-        private static string[] AddCardToHand(string[] hand, string newCard)
-        {
-            Array.Resize(ref hand, hand.Length + 1);
-            hand[hand.Length - 1] = newCard;
-            return hand;
-        }
-
+        // Calculates the total value of a hand, accounting for the ace's value as 1 or 11.
         private static int CalculateHandValue(string[] hand)
         {
-            int sum = 0;
-            int aceCount = 0;
-
+            int sum = 0, aceCount = 0;
             foreach (string card in hand)
             {
-                int value = 0;
-                if (card[0] == 'A')
-                {
-                    value = 11;
-                    aceCount++;
-                }
-                else if (card[0] == 'J' || card[0] == 'Q' || card[0] == 'K')
-                {
-                    value = 10;
-                }
-                else
-                {
-                    value = int.Parse(card.Substring(0, card.Length - 1));
-                }
-
+                int value = card[0] == 'A' ? 11 : (card[0] == 'J' || card[0] == 'Q' || card[0] == 'K' ? 10 : int.Parse(card.Substring(0, card.Length - 1)));
+                if (card[0] == 'A') aceCount++;
                 sum += value;
             }
-
-            // Adjust the value of aces if the sum exceeds 21
             while (sum > 21 && aceCount > 0)
             {
                 sum -= 10;
                 aceCount--;
             }
-
             return sum;
         }
 
-        private static void DealerTurn(Random randomGenerator, string[] dealerHand, string[] playerHand)
+        // Dealer's turn where they draw cards until they reach a certain hand value.
+        private static void DealerTurn(string[] hand, int playerHandValue)
         {
-            // Whitespace line
-            Console.WriteLine();
-            // Display the dealer's hand
-            Console.WriteLine("Dealer's hand: " + HandToString(dealerHand));
-
-            // Continue hitting until the dealer's hand value is 17 or higher and smaller than player's hand value
-            while (CalculateHandValue(dealerHand) < 17 || CalculateHandValue(dealerHand) < CalculateHandValue(playerHand))
+            while (CalculateHandValue(hand) < 17 || CalculateHandValue(hand) < playerHandValue)
             {
-                string newCard = DealCard(randomGenerator);
-                Console.WriteLine("Dealer draws: " + newCard);
-                dealerHand = AddCardToHand(dealerHand, newCard);
+                string card = DealCard();
+                Console.WriteLine();
+                Console.WriteLine($"Dealer draws: {card}");
+                Array.Resize(ref hand, hand.Length + 1);
+                hand[hand.Length - 1] = card;
             }
-
-            // Display the final dealer's hand
-            Console.WriteLine("Dealer's final hand: " + HandToString(dealerHand));
+            Console.WriteLine($"Dealer's final hand: {HandToString(hand)}");
         }
     }
 }
