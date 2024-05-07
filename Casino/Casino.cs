@@ -209,7 +209,7 @@ namespace Royal_Flush_Casino
                     break;
 				case "3":
 					Console.WriteLine("You walk to the Table Games");
-					NavigateToTableGames();
+					NavigateToTableGames(player);
 					break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a correct number");
@@ -228,9 +228,9 @@ namespace Royal_Flush_Casino
 			GameSelector.ChooseSlotMachine(player);
 		}
 
-		void NavigateToTableGames()
+		void NavigateToTableGames(Player player)
 		{
-			GameSelector.ChooseTableGame();
+			GameSelector.ChooseTableGame(player);
 		}
 	}
 }

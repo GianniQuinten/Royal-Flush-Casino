@@ -75,7 +75,7 @@ namespace Royal_Flush_Casino.Utility
 			Console.WriteLine("Choose the sport you want to bet on:");
 			Console.WriteLine("1. Football");
 			Console.WriteLine("2. Horse Racing");
-            Console.WriteLine("3. Go back to Casino Menu");
+            Console.WriteLine("3. Go back to the Casino Menu");
 
             // Get user's choice of sport
             Console.Write("Enter your choice (1/2/3): ");
@@ -103,9 +103,9 @@ namespace Royal_Flush_Casino.Utility
             }
 		}
 
-		public static void ChooseTableGame()
+		public static void ChooseTableGame(Player player)
 		{
-			TableGame.BlackJack(new string[] { });
+			BlackJack.PlayBlackJack(player);
 		}
 
 		// Add more game selector methods as needed for different sections of your casino application
