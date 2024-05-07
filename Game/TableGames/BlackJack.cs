@@ -36,7 +36,10 @@ namespace Royal_Flush_Casino.Game
                         PlayGame(player);
                         break;
                     case "2":
-                        return; // Control returns to the higher menu system or main menu
+                        Console.Clear();
+                        Casino casino = new Casino();
+                        casino.enterCasino(player);
+                        break;
                     case "3":
                         Environment.Exit(0); // Exits the application
                         break;
@@ -147,6 +150,7 @@ namespace Royal_Flush_Casino.Game
             int sum = 0, aceCount = 0;
             foreach (string card in hand)
             {
+                // If the card is a 'J', 'Q', or 'K', its value is 10, If the card is an 'A', its value is 11
                 int value = card[0] == 'A' ? 11 : (card[0] == 'J' || card[0] == 'Q' || card[0] == 'K' ? 10 : int.Parse(card.Substring(0, card.Length - 1)));
                 if (card[0] == 'A') aceCount++;
                 sum += value;
@@ -162,6 +166,7 @@ namespace Royal_Flush_Casino.Game
         // Dealer's turn where they draw cards until they reach a certain hand value.
         private static void DealerTurn(string[] hand, int playerHandValue)
         {
+            // Continue hitting until the dealer's hand value is 17 or higher and smaller than player's hand value
             while (CalculateHandValue(hand) < 17 || CalculateHandValue(hand) < playerHandValue)
             {
                 string card = DealCard();
