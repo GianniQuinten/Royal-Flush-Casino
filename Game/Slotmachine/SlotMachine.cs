@@ -128,7 +128,7 @@ namespace Royal_Flush_Casino.Game
 				// Assuming we prioritize diagonal wins or any win, pick a representative symbol for the win type
 				string winningSymbol = isMiddleRowWin ? grid[1, 1] : grid[0, 0]; // Simplified example
 				winMultiplier = CalculatePayout(winningSymbol);
-				player.chips += winMultiplier; // Update the player's chip count
+				player.Chips += winMultiplier; // Update the player's chip count
 				Console.WriteLine($"You won {winMultiplier} chips!");
 			}
 			else

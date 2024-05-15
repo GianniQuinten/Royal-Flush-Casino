@@ -57,7 +57,7 @@ namespace Royal_Flush_Casino.Utility
 					// Call the method in the Casino class to return to the main casino interface
 					Console.Clear();
 					Casino casino = new Casino();
-					casino.enterCasino(player);
+					casino.EnterCasino(player);
 					break;
 				default:
 					Console.WriteLine("Invalid choice. Please enter a correct number");
@@ -75,7 +75,7 @@ namespace Royal_Flush_Casino.Utility
 			Console.WriteLine("Choose the sport you want to bet on:");
 			Console.WriteLine("1. Football");
 			Console.WriteLine("2. Horse Racing");
-            Console.WriteLine("3. Go back to Casino Menu");
+            Console.WriteLine("3. Go back to the Casino Menu");
 
             // Get user's choice of sport
             Console.Write("Enter your choice (1/2/3): ");
@@ -98,14 +98,14 @@ namespace Royal_Flush_Casino.Utility
 				case 3:
                     Console.Clear();
                     Casino casino = new Casino();
-                    casino.enterCasino(player);
+                    casino.EnterCasino(player);
                     break;
             }
 		}
 
-		public static void ChooseTableGame()
+		public static void ChooseTableGame(Player player)
 		{
-			TableGame.BlackJack(new string[] { });
+			BlackJack.PlayBlackJack(player);
 		}
 
 		// Add more game selector methods as needed for different sections of your casino application
