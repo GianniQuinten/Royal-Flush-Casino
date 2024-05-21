@@ -137,7 +137,7 @@ namespace Royal_Flush_Casino.Game
 
             Console.SetCursorPosition(0, lineHeight);
             Console.WriteLine($"\nFull Time! {teamA} {goalsA} - {goalsB} {teamB}");
-            BetOutCome(goalsA, goalsB, chosenBet, player);
+            BetOutCome(goalsA, goalsB, chosenBet, player, teamA, teamB);
         }
 
         private void DisplayMatchStatus(string teamA, string teamB, int goalsA, int goalsB, int minutes, string chosenBet, int lineHeight)
@@ -151,27 +151,23 @@ namespace Royal_Flush_Casino.Game
             Console.SetCursorPosition(0, lineHeight);
         }
 
-        private void BetOutCome(int goalsA, int goalsB, string choice, Player player)
+        private void BetOutCome(int goalsA, int goalsB, string choice, Player player, string teamA, string teamB)
         {
-            string betOutcome;
-            if (choice == $"{Teams[0]} wins")
+            string betOutcome = "You lose!";
+            if (choice == $"{teamA} wins" && goalsA > goalsB)
             {
-                betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
-                if (goalsA > goalsB) player.Chips += GameCost * 2.5;
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
             }
-            else if (choice == "Draw")
+            else if (choice == "Draw" && goalsA == goalsB)
             {
-                betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
-                if (goalsA == goalsB) player.Chips += GameCost * 2.5;
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
             }
-            else if (choice == $"{Teams[1]} wins")
+            else if (choice == $"{teamB} wins" && goalsA < goalsB)
             {
-                betOutcome = goalsA < goalsB ? "You win!" : "You lose!";
-                if (goalsA < goalsB) player.Chips += GameCost * 2.5;
-            }
-            else
-            {
-                betOutcome = "Invalid choice";
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
             }
 
             Console.WriteLine($"Your bet outcome: {betOutcome}");
