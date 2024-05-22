@@ -5,25 +5,25 @@ using Royal_Flush_Casino.Utility;
 
 namespace Royal_Flush_Casino.Game
 {
-	// Defines the base for a slot machine game
+	// defines the base for a slot machine game
 	internal class SlotMachine
 	{
-		// Protected array of slot symbols for inheritance
-		protected string[][] slots = Array.Empty<string[]>(); // Initialize to an empty array to avoid null references
+		// protected array of slot symbols for inheritance
+		protected string[][] slots = Array.Empty<string[]>(); // initialize to an empty array to avoid null references
 
-		// The cost to play a single spin on this slot machine. This can be overridden by other slot machine classes.
+		// the cost to play a single spin on this slot machine. this can be overridden by other slot machine classes.
 		protected double spinCost = 5;
 
-		// Dictionary for the icons to assign a multiplier
+		// dictionary for the icons to assign a multiplier
 		protected Dictionary<string, double> symbolPayouts = new Dictionary<string, double>();
 
-		// Constructor
+		// constructor
 		public SlotMachine()
 		{
 			InitializeBaseSymbolsAndPayouts();
 		}
 
-		// Method to initialize base symbols and payouts
+		// method to initialize base symbols and payouts
 		protected virtual void InitializeBaseSymbolsAndPayouts()
 		{
 			slots = new string[][]
@@ -50,14 +50,14 @@ namespace Royal_Flush_Casino.Game
 			{
 				return multiplier * baseMultiplier;
 			}
-			return 0; // No win
+			return 0; // no win
 		}
 
 		public virtual void Play(Player player)
 		{
 			if (!DeductSpinCost(player))
 			{
-				Console.WriteLine("Too bad, you do not have enough chips.");
+				Console.WriteLine("too bad, you do not have enough chips.");
 				return;
 			}
 
@@ -132,16 +132,16 @@ namespace Royal_Flush_Casino.Game
 
 			if (isAnyWin)
 			{
-				Console.WriteLine("Congratulations! You won!");
+				Console.WriteLine("congratulations! you won!");
 				string winningSymbol = grid[1, 1];
 				double winMultiplier = CalculatePayout(winningSymbol);
 				player.Chips += winMultiplier;
-				Console.WriteLine($"You won {winMultiplier} chips!");
+				Console.WriteLine($"you won {winMultiplier} chips!");
 			}
 			else
 			{
-				Console.WriteLine("Better luck next time!");
-				Console.WriteLine("Press any key to continue");
+				Console.WriteLine("better luck next time!");
+				Console.WriteLine("press any key to continue");
 			}
 
 			Console.ReadKey();
@@ -150,7 +150,7 @@ namespace Royal_Flush_Casino.Game
 		protected void DisplaySlotGrid(string[,] grid)
 		{
 			Console.Clear();
-			Console.WriteLine("Spinning the reels...\n");
+			Console.WriteLine("spinning the reels...\n");
 			for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
 			{
 				for (int reel = 0; reel < grid.GetLength(0); reel++)
