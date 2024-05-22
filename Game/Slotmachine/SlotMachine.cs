@@ -1,40 +1,32 @@
 ﻿using Royal_Flush_Casino.Game.Slotmachine;
 using System;
+using System.Collections.Generic;
 using Royal_Flush_Casino.Utility;
-
 
 namespace Royal_Flush_Casino.Game
 {
-	// defines the base for a slotmachine game
+	// Defines the base for a slot machine game
 	internal class SlotMachine
-    {
-		// protected array of slot symbols for inheritance
+	{
+		// Protected array of slot symbols for inheritance
 		protected string[][] slots;
 
-		// The cost to play a single spin on this slot machine. This can be overridden by other slotmachine classes.
+		// The cost to play a single spin on this slot machine. This can be overridden by other slot machine classes.
 		protected double spinCost = 5;
 
-		// dictionary for the icons to assign a multiplier
+		// Dictionary for the icons to assign a multiplier
 		protected Dictionary<string, double> symbolPayouts = new Dictionary<string, double>();
-
-		// selector to choose slotmachine
-		private void ChooseSlotMachine(Player player)
-		{
-			// Directly invoke the GameSelector's method to choose the slot machine
-			// Make sure GameSelector is accessible from this context
-			GameSelector.ChooseSlotMachine(player);
-		}
 
 		// Constructor that initializes/makes a setup of the base slot symbols
 		public SlotMachine()
-        {
-            // this are the base slotmachine symbols
-            slots = new string[][]
-            {
-                new string[] { "🍒", "🍇", "🍓", "🍉" },
-                new string[] { "🍒", "🍇", "🍓", "🍉" },
-                new string[] { "🍒", "🍇", "🍓", "🍉" }
-            };
+		{
+			// These are the base slot machine symbols
+			slots = new string[][]
+			{
+				new string[] { "🍒", "🍇", "🍓", "🍉" },
+				new string[] { "🍒", "🍇", "🍓", "🍉" },
+				new string[] { "🍒", "🍇", "🍓", "🍉" }
+			};
 
 			// Base multipliers - can be overridden in derived classes
 			symbolPayouts.Add("🍒", 5.0);
@@ -43,10 +35,7 @@ namespace Royal_Flush_Casino.Game
 			symbolPayouts.Add("🍉", 5.0);
 		}
 
-			
-
-		double winMultiplier = 0;
-		double baseMultiplier = 20;
+		protected double baseMultiplier = 20;
 
 		protected double CalculatePayout(string symbol)
 		{
@@ -57,48 +46,47 @@ namespace Royal_Flush_Casino.Game
 			return 0; // No win
 		}
 
-		// this is the  Play method logic that can be used by other slotmachines
+		// This is the Play method logic that can be used by other slot machines
 		public virtual void Play(Player player)
 		{
-			// we use this to randomise 
 			Random random = new Random();
-			int numberOfReels = 3; // how many reels/wheels the slotmachines has
-			int numberOfSymbols = 3; // this is how many icons are on each wheel
+			int numberOfReels = 3; // How many reels/wheels the slot machines have
+			int numberOfSymbols = 3; // This is how many icons are on each wheel
 
-			// this builds the grid 
+			// This builds the grid 
 			string[,] grid = new string[numberOfReels, numberOfSymbols];
 
-			// we fill up our square with ? to start
-			for (int reel = 0; reel < numberOfReels; reel++) // for each spinning wheel
+			// We fill up our square with ? to start
+			for (int reel = 0; reel < numberOfReels; reel++) // For each spinning wheel
 			{
-				for (int symbol = 0; symbol < numberOfSymbols; symbol++) // for each icon on the wheel
+				for (int symbol = 0; symbol < numberOfSymbols; symbol++) // For each icon on the wheel
 				{
-					grid[reel, symbol] = "?"; // we start with a ? placeholder
+					grid[reel, symbol] = "?"; // We start with a ? placeholder
 				}
 			}
 
-			// displays initial grid
+			// Displays initial grid
 			DisplaySlotGrid(grid);
 
-			// animates each reel
+			// Animates each reel
 			for (int reel = 0; reel < numberOfReels; reel++)
 			{
 				DateTime endTime = DateTime.Now.AddSeconds(3);
 				while (DateTime.Now < endTime)
 				{
-					// update each symbol in the current reel
+					// Update each symbol in the current reel
 					for (int symbol = 0; symbol < numberOfSymbols; symbol++)
 					{
 						grid[reel, symbol] = slots[reel][random.Next(slots[reel].Length)];
 					}
 
-					// display updated reel
+					// Display updated reel
 					DisplaySlotGrid(grid);
 					System.Threading.Thread.Sleep(100); // Delay for animation
 				}
 			}
 
-			// set final symbols
+			// Set final symbols
 			for (int reel = 0; reel < numberOfReels; reel++)
 			{
 				for (int symbol = 0; symbol < numberOfSymbols; symbol++)
@@ -107,7 +95,6 @@ namespace Royal_Flush_Casino.Game
 				}
 			}
 
-			// Display final grid
 			// Display final grid
 			DisplaySlotGrid(grid);
 
@@ -119,22 +106,18 @@ namespace Royal_Flush_Casino.Game
 			bool isDiagonalWinRTL = grid[2, 0] == grid[1, 1] && grid[1, 1] == grid[0, 2];
 			bool isAnyWin = isUpperRowWin || isMiddleRowWin || isLowerRowWin || isDiagonalWinLTR || isDiagonalWinRTL;
 
-			
-
-			// Modify this part to account for all win conditions
 			if (isAnyWin)
 			{
 				Console.WriteLine("Congratulations! You won!");
-				// Assuming we prioritize diagonal wins or any win, pick a representative symbol for the win type
-				string winningSymbol = isMiddleRowWin ? grid[1, 1] : grid[0, 0]; // Simplified example
-				winMultiplier = CalculatePayout(winningSymbol);
+				string winningSymbol = grid[1, 1]; // Simplified example
+				double winMultiplier = CalculatePayout(winningSymbol);
 				player.Chips += winMultiplier; // Update the player's chip count
 				Console.WriteLine($"You won {winMultiplier} chips!");
 			}
 			else
 			{
 				Console.WriteLine("Better luck next time!");
-				Console.WriteLine("press any key to continue");
+				Console.WriteLine("Press any key to continue");
 			}
 
 			// Ending prompts...
@@ -154,5 +137,5 @@ namespace Royal_Flush_Casino.Game
 				Console.WriteLine("\n");
 			}
 		}
-    }
+	}
 }
