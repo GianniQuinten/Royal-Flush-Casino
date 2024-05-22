@@ -9,7 +9,7 @@ namespace Royal_Flush_Casino.Game
 	internal class SlotMachine
 	{
 		// Protected array of slot symbols for inheritance
-		protected string[][] slots;
+		protected string[][] slots = Array.Empty<string[]>(); // Initialize to an empty array to avoid null references
 
 		// The cost to play a single spin on this slot machine. This can be overridden by other slot machine classes.
 		protected double spinCost = 5;
@@ -41,12 +41,11 @@ namespace Royal_Flush_Casino.Game
 		{
 			if (symbolPayouts.TryGetValue(symbol, out double multiplier))
 			{
-				return multiplier * baseMultiplier; // Assuming baseMultiplier is defined elsewhere
+				return multiplier * baseMultiplier;
 			}
 			return 0; // No win
 		}
 
-		// This is the Play method logic that can be used by other slot machines
 		public virtual void Play(Player player)
 		{
 			Random random = new Random();
