@@ -16,4 +16,8 @@
     <Compile Include="Documentation\Userstory\userstory.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Documentation\Reflection reports\" />
+  </ItemGroup>
+
 </Project>
