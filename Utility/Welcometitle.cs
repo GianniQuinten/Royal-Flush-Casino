@@ -2,7 +2,7 @@
 
 namespace Royal_Flush_Casino.Utility
 {
-	internal class Welcometitle
+	internal class WelcomeTitle
 	{
 		public static void DisplayTitle()
 		{
@@ -20,7 +20,7 @@ namespace Royal_Flush_Casino.Utility
 				"                    \"Y88P\""
 			};
 
-			// The reason for the foreach loop is because the old code would not render the console properly after maximizing the window
+			// the reason for the foreach loop is because the old code would not render the console properly after maximizing the window
 			foreach (string line in titleLines)
 			{
 				Console.WriteLine(line);
@@ -29,7 +29,7 @@ namespace Royal_Flush_Casino.Utility
 
 		public static void DisplayWelcome()
 		{
-			Console.WriteLine("Welcome to Royal Flush Casino!");
+			Console.WriteLine("welcome to royal flush casino!");
 		}
 	}
 }

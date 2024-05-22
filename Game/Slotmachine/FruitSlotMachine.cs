@@ -9,6 +9,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 		public FruitSlotMachine() : base()
 		{
 			this.spinCost = 5.0;
+			InitializeBaseSymbolsAndPayouts();
 		}
 
 		protected override void InitializeBaseSymbolsAndPayouts()
@@ -31,15 +32,15 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 
 		public override void Play(Player player)
 		{
-			Console.WriteLine("Playing the fruit-themed slot machine...");
+			Console.WriteLine("playing the fruit-themed slot machine...");
 
 			bool keepPlaying = true;
 
 			while (keepPlaying)
 			{
-				Console.WriteLine($"You currently have: {player.Chips} chips.");
-				Console.WriteLine($"Do you wish to play for: {this.spinCost} chips? (yes/no)");
-				string response = Console.ReadLine()?.Trim().ToLower() ?? ""; // Use null-coalescing operator to handle null response
+				Console.WriteLine($"you currently have: {player.Chips} chips.");
+				Console.WriteLine($"do you wish to play for: {this.spinCost} chips? (yes/no)");
+				string response = Console.ReadLine()?.Trim().ToLower() ?? ""; // use null-coalescing operator to handle null response
 
 				if (response == "yes")
 				{
@@ -52,7 +53,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				}
 				else
 				{
-					Console.WriteLine("Invalid response. Please answer 'yes' or 'no'.");
+					Console.WriteLine("invalid response. please answer 'yes' or 'no'.");
 				}
 			}
 		}
