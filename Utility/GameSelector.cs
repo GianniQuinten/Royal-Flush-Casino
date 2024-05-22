@@ -105,8 +105,9 @@ namespace Royal_Flush_Casino.Utility
 
 		public static void ChooseTableGame(Player player)
 		{
-			BlackJack.PlayBlackJack(player);
-		}
+            Blackjack blackjackGame = new Blackjack();
+            blackjackGame.PlayBlackJack(player);
+        }
 
 		// Add more game selector methods as needed for different sections of your casino application
 
