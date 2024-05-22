@@ -2,19 +2,9 @@
 
 namespace Royal_Flush_Casino.Game
 {
-    internal class BlackJack
+    internal class Blackjack : CardGame
     {
-        // Random object to generate random numbers, used for card dealing
-        private static Random random = new Random();
-
-        // Array of card suits
-        private static string[] suits = { "♥", "♦", "♣", "♠" };
-
-        // Array of card faces
-        private static string[] faces = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-
-        // Starts the Blackjack game loop where the player can start new games, go back, or exit.
-        public static void PlayBlackJack(Player player)
+        public void PlayBlackJack(Player player)
         {
             Console.Clear();
             Console.WriteLine($"Welcome to BLACKJACK!\nYou have {player.Chips} chips.");
@@ -50,8 +40,7 @@ namespace Royal_Flush_Casino.Game
             }
         }
 
-        // Handles the logic for playing a single game of Blackjack.
-        private static void PlayGame(Player player)
+        public override void PlayGame(Player player)
         {
             Console.Clear();
             double bet = GetBet(player.Chips); // Ask player to make a bet
@@ -87,8 +76,7 @@ namespace Royal_Flush_Casino.Game
             Console.WriteLine($"You now have {player.Chips} chips.");
         }
 
-        // Prompt the player to enter a bet and validate it.
-        private static double GetBet(double playerChips)
+        protected override double GetBet(double playerChips)
         {
             while (true)
             {
@@ -99,28 +87,13 @@ namespace Royal_Flush_Casino.Game
             }
         }
 
-        // Deals an initial hand of two cards.
-        private static string[] DealInitialHand()
+        protected override string[] DealInitialHand()
         {
             return new string[] { DealCard(), DealCard() };
         }
 
-        // Deals a single card by randomly choosing a suit and a face.
-        private static string DealCard()
-        {
-            int suitIndex = random.Next(suits.Length);
-            int faceIndex = random.Next(faces.Length);
-            return faces[faceIndex] + suits[suitIndex];
-        }
-
-        // Converts an array of card strings into a single string.
-        private static string HandToString(string[] hand)
-        {
-            return string.Join(" ", hand);
-        }
-
         // Manages the player's turn where they can choose to hit (take more cards) or stand.
-        private static bool PlayerTurn(string[] hand)
+        private bool PlayerTurn(string[] hand)
         {
             while (true)
             {
@@ -145,7 +118,7 @@ namespace Royal_Flush_Casino.Game
         }
 
         // Calculates the total value of a hand, accounting for the ace's value as 1 or 11.
-        private static int CalculateHandValue(string[] hand)
+        private int CalculateHandValue(string[] hand)
         {
             int sum = 0, aceCount = 0;
             foreach (string card in hand)
@@ -164,7 +137,7 @@ namespace Royal_Flush_Casino.Game
         }
 
         // Dealer's turn where they draw cards until they reach a certain hand value.
-        private static void DealerTurn(string[] hand, int playerHandValue)
+        private void DealerTurn(string[] hand, int playerHandValue)
         {
             // Continue hitting until the dealer's hand value is 17 or higher and smaller than player's hand value
             while (CalculateHandValue(hand) < 17 || CalculateHandValue(hand) < playerHandValue)
