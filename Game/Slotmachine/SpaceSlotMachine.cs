@@ -1,9 +1,5 @@
 ﻿using Royal_Flush_Casino.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Royal_Flush_Casino.Game.Slotmachine
 {
@@ -11,17 +7,16 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 	{
 		public SpaceSlotMachine() : base()
 		{
-			// Set a specific cost for spinning this fruit slot machine.
-			this.spinCost = 4.0; // Directly assign the value to the protected field/property
+			// Set a specific cost for spinning this space-themed slot machine.
+			this.spinCost = 4.0;
 
-								 // Define symbols for each reel for the diamond-themed slot machine
+			// Define symbols for each reel for the space-themed slot machine
 			slots = new string[][]
 			{
 				new string[] { "🌍", "⭐", "👽", "🚀" },
 				new string[] { "🚀", "🌍", "⭐", "👽" },
 				new string[] { "👽", "🚀", "🌍", "⭐" }
 			};
-
 
 			// Define specific multipliers for this slot machine
 			symbolPayouts = new Dictionary<string, double>
@@ -35,15 +30,14 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 
 		public override void Play(Player player)
 		{
-			// Custom logic for diamond-themed slot machine
-			Console.WriteLine("Playing the diamond-themed slot machine...");
+			Console.WriteLine("Playing the space-themed slot machine...");
 
 			bool keepPlaying = true;
 
 			while (keepPlaying)
 			{
 				Console.WriteLine($"You currently have: {player.Chips} chips.");
-				Console.WriteLine($"The price is: {this.spinCost} chips, is that alright? (yes/no)");
+				Console.WriteLine($"Do you wish to play for: {this.spinCost} chips? (yes/no)");
 				string response = Console.ReadLine().Trim().ToLower();
 
 				if (response == "yes")
@@ -53,7 +47,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 						player.Chips -= this.spinCost; // Deduct the spin cost
 						Console.WriteLine("Great! Let's play.");
 
-						base.Play(player); // Actual game play happens here
+						base.Play(player); // Actual gameplay happens here
 						keepPlaying = true;
 					}
 					else
@@ -70,7 +64,6 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				else
 				{
 					Console.WriteLine("Invalid response. Please answer 'yes' or 'no'.");
-					// This allows the loop to re-prompt the player without altering the keepPlaying flag.
 				}
 			}
 		}
