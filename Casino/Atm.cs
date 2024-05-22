@@ -20,7 +20,7 @@ namespace Royal_Flush_Casino
 				Console.WriteLine("What would you like to do?");
 				Console.WriteLine("1. Show account balance");
 				Console.WriteLine("2. Deposit money");
-				Console.WriteLine("3. Withdraw money.");
+				Console.WriteLine("3. Withdraw money");
 				Console.WriteLine("4. Exit");
 				string? atmChoice = Console.ReadLine();
 

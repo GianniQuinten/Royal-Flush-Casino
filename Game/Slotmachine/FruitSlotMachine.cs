@@ -1,5 +1,6 @@
 ﻿using Royal_Flush_Casino.Utility;
 using System;
+using System.Collections.Generic;
 
 namespace Royal_Flush_Casino.Game.Slotmachine
 {
@@ -7,10 +8,11 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 	{
 		public FruitSlotMachine() : base()
 		{
-			// Set a specific cost for spinning this fruit slot machine.
 			this.spinCost = 5.0;
+		}
 
-			// Define symbols for each reel for the berry-themed slot machine
+		protected override void InitializeBaseSymbolsAndPayouts()
+		{
 			slots = new string[][]
 			{
 				new string[] { "🍎", "🍌", "🍍", "🍇" },
@@ -18,7 +20,6 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				new string[] { "🍎", "🍌", "🍍", "🍇" }
 			};
 
-			// Define specific multipliers for this slot machine
 			symbolPayouts = new Dictionary<string, double>
 			{
 				{ "🍎", 10.0 },
@@ -42,19 +43,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 
 				if (response == "yes")
 				{
-					if (player.Chips >= this.spinCost)
-					{
-						player.Chips -= this.spinCost; // Deduct the spin cost
-						Console.WriteLine("Great! Let's play.");
-
-						base.Play(player); // Actual gameplay happens here
-						keepPlaying = true;
-					}
-					else
-					{
-						Console.WriteLine("Too bad, you do not have enough chips.");
-						keepPlaying = false; // Player can't continue playing due to insufficient chips
-					}
+					base.Play(player);
 				}
 				else if (response == "no")
 				{
