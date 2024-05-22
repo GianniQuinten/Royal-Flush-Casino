@@ -1,9 +1,5 @@
 ﻿using Royal_Flush_Casino.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Royal_Flush_Casino.Game.Slotmachine
 {
@@ -12,7 +8,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 		public FruitSlotMachine() : base()
 		{
 			// Set a specific cost for spinning this fruit slot machine.
-			this.spinCost = 5.0; // Directly assign the value to the protected field/property
+			this.spinCost = 5.0;
 
 			// Define symbols for each reel for the berry-themed slot machine
 			slots = new string[][]
@@ -21,7 +17,6 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				new string[] { "🍎", "🍌", "🍍", "🍇" },
 				new string[] { "🍎", "🍌", "🍍", "🍇" }
 			};
-
 
 			// Define specific multipliers for this slot machine
 			symbolPayouts = new Dictionary<string, double>
@@ -42,7 +37,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 			while (keepPlaying)
 			{
 				Console.WriteLine($"You currently have: {player.Chips} chips.");
-				Console.WriteLine($"Do you wish to play for:  {this.spinCost} chips? (yes/no)");
+				Console.WriteLine($"Do you wish to play for: {this.spinCost} chips? (yes/no)");
 				string response = Console.ReadLine().Trim().ToLower();
 
 				if (response == "yes")
@@ -52,7 +47,7 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 						player.Chips -= this.spinCost; // Deduct the spin cost
 						Console.WriteLine("Great! Let's play.");
 
-						base.Play(player); // Actual game play happens here
+						base.Play(player); // Actual gameplay happens here
 						keepPlaying = true;
 					}
 					else
@@ -69,13 +64,8 @@ namespace Royal_Flush_Casino.Game.Slotmachine
 				else
 				{
 					Console.WriteLine("Invalid response. Please answer 'yes' or 'no'.");
-					// This allows the loop to re-prompt the player without altering the keepPlaying flag.
 				}
 			}
 		}
-
-
-
-
 	}
 }
