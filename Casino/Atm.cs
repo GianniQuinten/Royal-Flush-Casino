@@ -8,91 +8,125 @@ namespace Royal_Flush_Casino
 
 		public ATM(Player player)
 		{
-			this.player = player;
+			this.player = player ?? throw new ArgumentNullException(nameof(player));
 		}
 
-		public void atmOptions()
+		public void AtmOptions()
 		{
-			Console.WriteLine("What would you like to do?");
-			Console.WriteLine("1. Show account balance");
-			Console.WriteLine("2. Deposit money");
-			Console.WriteLine("3. Withdraw money.");
-			Console.WriteLine("4. Exit");
-			string atmChoice = Console.ReadLine();
-
-			switch (atmChoice)
+			bool exit = false;
+			while (!exit)
 			{
-				case "1":
-					balance();
-					break;
-				case "2":
-					deposit();
-					break;
-				case "3":
-					withdraw();
-					break;
-				case "4":
-					// Exit logic or return to main menu
-					break;
-				default:
-					Console.WriteLine("Invalid choice. Please enter a correct number");
-					atmOptions();  // Recursive call
-					break;
+				Console.Clear();
+				Console.WriteLine("what would you like to do?");
+				Console.WriteLine("1. show account balance");
+				Console.WriteLine("2. deposit money");
+				Console.WriteLine("3. withdraw money");
+				Console.WriteLine("4. exit");
+				string? atmChoice = Console.ReadLine();
+
+				if (atmChoice == null)
+				{
+					Console.WriteLine("invalid input. please enter a correct number.");
+					continue; // ask for input again
+				}
+
+				switch (atmChoice)
+				{
+					case "1":
+						Balance();
+						break;
+					case "2":
+						Deposit();
+						break;
+					case "3":
+						Withdraw();
+						break;
+					case "4":
+						exit = true;
+						break;
+					default:
+						Console.WriteLine("invalid choice. please enter a correct number.");
+						break;
+				}
 			}
 		}
 
-		public void balance()
+		public void Balance()
 		{
-			Console.WriteLine("Your balance is: " + player.Balance);
-			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			Console.WriteLine($"your balance is: {player.Balance}");
+			Console.WriteLine("press any key to go back to the atm options menu...");
 			Console.ReadKey();
-			Console.Clear();
-			atmOptions();
 		}
 
-		public void deposit()
+		public void Deposit()
 		{
-			Console.WriteLine("How much money would you like to deposit? ");
-			double deposit = Double.Parse(Console.ReadLine());
+			Console.WriteLine("how much money would you like to deposit?");
+			string? input = Console.ReadLine();
 
-			if (deposit > player.MoneyOnHand)
+			if (input == null)
 			{
-				Console.WriteLine("You do not have enough money to deposit that amount.");
-				Console.WriteLine("Your current balance on hand is: " + player.MoneyOnHand);
+				Console.WriteLine("invalid input. please enter a valid amount.");
+				Console.ReadKey();
+				return;
+			}
+
+			if (double.TryParse(input, out double deposit))
+			{
+				if (deposit > player.MoneyOnHand)
+				{
+					Console.WriteLine("you do not have enough money to deposit that amount.");
+					Console.WriteLine($"your current balance on hand is: {player.MoneyOnHand}");
+				}
+				else
+				{
+					player.AddToBalance(deposit);
+					player.MoneyOnHand -= deposit;
+					Console.WriteLine("deposit successful.");
+					Console.WriteLine($"your new balance is: {player.Balance}");
+					Console.WriteLine($"you now have: {player.MoneyOnHand} on hand");
+				}
 			}
 			else
 			{
-				player.AddToBalance(deposit);
-				player.MoneyOnHand -= deposit;
-				Console.WriteLine("Deposit successful. Your new balance is: " + player.Balance);
-				Console.WriteLine("You now have: " + player.MoneyOnHand + " on hand");
+				Console.WriteLine("invalid input. please enter a valid amount.");
 			}
-			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			Console.WriteLine("press any key to go back to the atm options menu...");
 			Console.ReadKey();
-			Console.Clear();
-			atmOptions();
 		}
 
-		public void withdraw()
+		public void Withdraw()
 		{
-			Console.WriteLine("How much money would you like to withdraw? ");
-			double withdrawal = Double.Parse(Console.ReadLine());
+			Console.WriteLine("how much money would you like to withdraw?");
+			string? input = Console.ReadLine();
 
-			try
+			if (input == null)
 			{
-				player.SubtractFromBalance(withdrawal);
-				player.MoneyOnHand += withdrawal;
-				Console.WriteLine("Withdrawal successful. Your new balance is: " + player.Balance);
-				Console.WriteLine("You now have: " + player.MoneyOnHand + " on hand");
+				Console.WriteLine("invalid input. please enter a valid amount.");
+				Console.ReadKey();
+				return;
 			}
-			catch (InvalidOperationException e)
+
+			if (double.TryParse(input, out double withdrawal))
 			{
-				Console.WriteLine(e.Message);
+				try
+				{
+					player.SubtractFromBalance(withdrawal);
+					player.MoneyOnHand += withdrawal;
+					Console.WriteLine("withdrawal successful.");
+					Console.WriteLine($"your new balance is: {player.Balance}");
+					Console.WriteLine($"you now have: {player.MoneyOnHand} on hand");
+				}
+				catch (InvalidOperationException e)
+				{
+					Console.WriteLine(e.Message);
+				}
 			}
-			Console.WriteLine("Press any key to go back to the ATM options menu...");
+			else
+			{
+				Console.WriteLine("invalid input. please enter a valid amount.");
+			}
+			Console.WriteLine("press any key to go back to the atm options menu...");
 			Console.ReadKey();
-			Console.Clear();
-			atmOptions();
 		}
 	}
-	}
+}
