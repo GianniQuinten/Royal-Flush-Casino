@@ -5,7 +5,6 @@ using System.Threading;
 
 namespace Royal_Flush_Casino.Game
 {
-    // Abstract class for matches
     internal abstract class Match
     {
         protected List<string> Teams { get; set; }
@@ -14,11 +13,9 @@ namespace Royal_Flush_Casino.Game
         public abstract void Play(Player player);
     }
 
-    // Concrete class for football matches
     internal class FootballMatch : Match
     {
-        // Set the bet price to 10 chips per game
-        private double gameCost = 10;
+        private const double GameCost = 10;
 
         public FootballMatch()
         {
@@ -32,211 +29,173 @@ namespace Royal_Flush_Casino.Game
 
         public override void Play(Player player)
         {
-            bool playAgain = true;
-
-            while (playAgain)
+            while (true)
             {
                 Console.Clear();
+                var (teamA, teamB) = SelectTeams();
+                string chosenBet = GetBetOption(player, teamA, teamB);
 
-                // Select teams randomly
-                int teamIndex1 = Random.Next(Teams.Count);
-                int teamIndex2 = Random.Next(Teams.Count);
+                if (chosenBet == "Go back to Sportbetting") break;
 
-                while (teamIndex1 == teamIndex2) // Ensure both teams are different
-                {
-                    teamIndex2 = Random.Next(Teams.Count);
-                }
-
-                string teamA = Teams[teamIndex1];
-                string teamB = Teams[teamIndex2];
-
-                // Betting
-                string choiceText;
-                string chosenBet = "";
-                do
-                {
-                    // Display match information
-                    Console.WriteLine($"Match: {teamA} vs {teamB}\n");
-                    Console.WriteLine("Place your bet:");
-                    Console.WriteLine($"1. {teamA} wins");
-                    Console.WriteLine("2. Draw");
-                    Console.WriteLine($"3. {teamB} wins");
-                    Console.WriteLine("4. Go back to Sportbetting");
-
-                    Console.WriteLine();
-                    Console.WriteLine($"You currently have: {player.Chips} chips, the price to play will be: {this.gameCost} chips.");
-                    Console.Write("Enter your choice: ");
-                    choiceText = Console.ReadLine();
-
-                    switch (choiceText)
-                    {
-                        case "1":
-                            chosenBet = teamA + " wins";
-                            player.Chips -= this.gameCost;
-                            break;
-                        case "2":
-                            chosenBet = "Draw";
-                            player.Chips -= this.gameCost;
-                            break;
-                        case "3":
-                            chosenBet = teamB + " wins";
-                            player.Chips -= this.gameCost;
-                            break;
-                        case "4":
-                            Console.Clear();
-                            GameSelector.SportBettingMain(player);
-                            break;
-                        default:
-                            chosenBet = "Invalid choice";
-                            Console.Clear();
-                            Console.WriteLine("Please enter a valid choice (1, 2, or 3).");
-                            break;
-                    }
-                } while (choiceText != "1" && choiceText != "2" && choiceText != "3");
-
-                // Clear console
                 Console.Clear();
+                SimulateMatch(teamA, teamB, out int goalsA, out int goalsB, chosenBet, player);
 
-                // Simulate match
-                int minutes = 0;
-                int goalsA = 0;
-                int goalsB = 0;
+                if (!PostMatchOptions(player)) break;
+            }
+        }
 
-                int lineHeight = 4; // Starting line for goal messages
+        private (string, string) SelectTeams()
+        {
+            int teamIndex1 = Random.Next(Teams.Count);
+            int teamIndex2;
+            do
+            {
+                teamIndex2 = Random.Next(Teams.Count);
+            } while (teamIndex1 == teamIndex2);
 
-                while (minutes <= 90)
-                {
-                    // Clear lines
-                    Console.SetCursorPosition(0, 1);
-                    Console.Write(new string(' ', Console.WindowWidth - 1)); // Clear score line
-                    Console.SetCursorPosition(0, 2);
+            return (Teams[teamIndex1], Teams[teamIndex2]);
+        }
 
-                    // Update score
-                    Console.SetCursorPosition(0, 0);
-                    Console.WriteLine($"Match: {teamA} {goalsA} - {goalsB} {teamB}");
-
-                    // Update minute
-                    Console.SetCursorPosition(0, 1);
-                    Console.Write($"Minute: {minutes}'");
-
-                    // Your bet
-                    Console.SetCursorPosition(0, 2);
-                    Console.WriteLine($"You bet on: {chosenBet}");
-
-
-                    // Simulate events like goals
-                    if (Random.Next(100) < 3) // 3% chance of a goal in any minute
-                    {
-                        string scoringTeam = Random.Next(2) == 0 ? teamA : teamB;
-                        if (scoringTeam == teamA)
-                        {
-                            goalsA++;
-                        }
-                        else
-                        {
-                            goalsB++;
-                        }
-
-                        Console.SetCursorPosition(0, lineHeight);
-                        Console.WriteLine($"GOAL! {scoringTeam} scored in the {minutes}th minute!");
-                        lineHeight++; // Move to the next line for the next goal message
-                    }
-
-                    if (minutes == 0)
-                    {
-                        // Kick Off!
-                        Console.SetCursorPosition(0, lineHeight);
-                        Console.WriteLine("Kick Off!\n");
-                        lineHeight++;
-                    }
-
-                    // Half Time
-                    if (minutes == 45)
-                    {
-                        lineHeight++;
-                        Console.SetCursorPosition(0, lineHeight);
-                        Console.WriteLine($"Half Time! {teamA} {goalsA} - {goalsB} {teamB}");
-                        Thread.Sleep(2000); // Pause for 2 seconds
-                        lineHeight++;
-                    }
-
-                    // Kick Off! Second Half begins!
-                    if (minutes == 46)
-                    {
-                        lineHeight++;
-                        Console.SetCursorPosition(0, lineHeight);
-                        Console.WriteLine("Kick Off! Second Half begins!");
-                        lineHeight++;
-                    }
-
-                    Thread.Sleep(250);
-                    minutes++;
-                }
-
-                // Display match result
-                Console.SetCursorPosition(0, lineHeight);
-                Console.WriteLine("\nFull Time!");
-                Console.WriteLine($"Match: {teamA} {goalsA} - {goalsB} {teamB}");
-
-                // Determine outcome based on user's choice
-                string betOutcome;
-                if (choiceText == "1")
-                {
-                    betOutcome = goalsA > goalsB ? "You win!" : "You lose!";
-                    if (goalsA > goalsB) // If the chosen team wins
-                    {   
-                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
-                    }
-                }
-                else if (choiceText == "2")
-                {
-                    betOutcome = goalsA == goalsB ? "You win!" : "You lose!";
-                    if (goalsA == goalsB) // If it's a draw
-                    {
-                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
-                    }
-                }
-                else if (choiceText == "3")
-                {
-                    betOutcome = goalsA < goalsB ? "You win!" : "You lose!";
-                    if (goalsA < goalsB) // If the chosen team wins
-                    {
-                        player.Chips += this.gameCost * 2.5; // Award double the bet amount
-                    }
-                }
-                else
-                {
-                    betOutcome = "Invalid choice";
-                }
-
-                Console.WriteLine($"Your bet outcome: {betOutcome}");
-                Console.WriteLine($"You currently have: {player.Chips} chips!");
-                Console.WriteLine(); // Skip a line
-
-                Console.WriteLine("1. Play again");
-                Console.WriteLine("2. Go back to sports betting");
-                Console.WriteLine("3. Exit the Casino");
+        private string GetBetOption(Player player, string teamA, string teamB)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Match: {teamA} vs {teamB}\n");
+                Console.WriteLine("Place your bet:");
+                Console.WriteLine($"1. {teamA} wins");
+                Console.WriteLine("2. Draw");
+                Console.WriteLine($"3. {teamB} wins");
+                Console.WriteLine("4. Go back to Sportbetting");
+                Console.WriteLine($"\nYou currently have: {player.Chips} chips. The price to play is: {GameCost} chips.");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        playAgain = true;
-                        break;
+                        choice = teamA + " wins";
+                        player.Chips -= GameCost;
+                        return choice;
                     case "2":
-                        playAgain = false;
+                        choice = "Draw";
+                        player.Chips -= GameCost;
+                        return choice;
+                    case "3":
+                        choice = teamB + " wins";
+                        player.Chips -= GameCost;
+                        return choice;
+                    case "4":
                         Console.Clear();
                         GameSelector.SportBettingMain(player);
-                        break;
-                    case "3":
-                        Environment.Exit(0);
-                        break;
+                        return choice;
                     default:
-                        playAgain = false;
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        choice = "Invalid choice";
+                        Console.Clear();
+                        Console.WriteLine("Please enter a valid choice (1, 2, or 3).");
                         break;
                 }
+            }
+        }
+
+        private void SimulateMatch(string teamA, string teamB, out int goalsA, out int goalsB, string chosenBet, Player player)
+        {
+            goalsA = 0;
+            goalsB = 0;
+            int minutes = 0;
+            int lineHeight = 4;
+
+            while (minutes <= 90)
+            {
+                DisplayMatchStatus(teamA, teamB, goalsA, goalsB, minutes, chosenBet, lineHeight);
+
+                if (Random.Next(100) < 3)
+                {
+                    if (Random.Next(2) == 0) goalsA++;
+                    else goalsB++;
+
+                    Console.SetCursorPosition(0, lineHeight);
+                    Console.WriteLine($"GOAL! {teamA} {goalsA} - {teamB} {goalsB} at {minutes}'");
+                    lineHeight++;
+                }
+
+                if (minutes == 0 || minutes == 45 || minutes == 46)
+                {
+                    Console.SetCursorPosition(0, lineHeight);
+                    Console.WriteLine(minutes switch
+                    {
+                        0 => "Kick Off!",
+                        45 => $"Half Time! {teamA} {goalsA} - {goalsB} {teamB}",
+                        46 => "Kick Off! Second Half begins!"
+                    });
+                    lineHeight++;
+                }
+
+                Thread.Sleep(250);
+                minutes++;
+            }
+
+            Console.SetCursorPosition(0, lineHeight);
+            Console.WriteLine($"\nFull Time! {teamA} {goalsA} - {goalsB} {teamB}");
+            BetOutCome(goalsA, goalsB, chosenBet, player, teamA, teamB);
+        }
+
+        private void DisplayMatchStatus(string teamA, string teamB, int goalsA, int goalsB, int minutes, string chosenBet, int lineHeight)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine($"Match: {teamA} {goalsA} - {goalsB} {teamB}");
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine($"Minute: {minutes}'");
+            Console.SetCursorPosition(0, 2);
+            Console.WriteLine($"You bet on: {chosenBet}");
+            Console.SetCursorPosition(0, lineHeight);
+        }
+
+        private void BetOutCome(int goalsA, int goalsB, string choice, Player player, string teamA, string teamB)
+        {
+            string betOutcome = "You lose!";
+            if (choice == $"{teamA} wins" && goalsA > goalsB)
+            {
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
+            }
+            else if (choice == "Draw" && goalsA == goalsB)
+            {
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
+            }
+            else if (choice == $"{teamB} wins" && goalsA < goalsB)
+            {
+                betOutcome = "You win!";
+                player.Chips += GameCost * 2.5;
+            }
+
+            Console.WriteLine($"Your bet outcome: {betOutcome}");
+            Console.WriteLine($"You currently have: {player.Chips} chips!");
+        }
+
+        private bool PostMatchOptions(Player player)
+        {
+            Console.WriteLine("1. Play again");
+            Console.WriteLine("2. Go back to sports betting");
+            Console.WriteLine("3. Exit the Casino");
+            Console.Write("Enter your choice: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    return true;
+                case "2":
+                    Console.Clear();
+                    GameSelector.SportBettingMain(player);
+                    return false;
+                case "3":
+                    Environment.Exit(0);
+                    return false;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    return false;
             }
         }
     }
